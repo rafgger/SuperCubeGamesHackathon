@@ -2,9 +2,6 @@
 
 A conversational flight planning application built with Flowise AI that uses the Kiwi MCP Server to search and recommend flights through natural language interactions.
 
-<img width="1120" height="860" alt="Screenshot 2025-12-18 221244" src="https://github.com/user-attachments/assets/42fa1b08-b632-45bf-8cdd-5b283b29c7e1" />
-
-
 <a href="https://youtu.be/yLfRdwD7vp8" target="_blank">
   <img src="https://github.com/user-attachments/assets/42fa1b08-b632-45bf-8cdd-5b283b29c7e1" alt="Flowise agents video example" width="500"/>
 </a>
