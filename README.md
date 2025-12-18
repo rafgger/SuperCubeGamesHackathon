@@ -84,7 +84,7 @@ The cheapest is option 3, but option 1 offers better value. Which do you prefer?
 - **Output**: Ranked flight options with explanations
 - **Features**: Price comparison, duration analysis, booking links
 
-<img width="1915" height="946" alt="Screenshot 2025-12-18 151852" src="https://github.com/user-attachments/assets/30ccae9b-7bdf-4910-b7cf-9f1f3322fcc3" />
+<img width="1515" alt="Screenshot 2025-12-18 151852" src="https://github.com/user-attachments/assets/30ccae9b-7bdf-4910-b7cf-9f1f3322fcc3" />
 
 <img width="1915" height="946" alt="Screenshot 2025-12-18 151852" src="https://github.com/user-attachments/assets/bf66bb4f-afb2-4907-8da5-8bc0ba244d46" />
 
