@@ -6,6 +6,10 @@ A conversational flight planning application built with Flowise AI that uses the
   <img src="https://github.com/user-attachments/assets/42fa1b08-b632-45bf-8cdd-5b283b29c7e1" alt="Flowise agents video example" width="500"/>
 </a>
 
+<br>
+<br>
+<img src="https://github.com/user-attachments/assets/b2a7d77d-613a-4620-bbd8-e539e00832c2" alt="A moment from the hackathon" width="600"/>
+
 ## Overview
 
 This project implements a multi-agent system that translates natural language travel requests into structured flight searches, providing users with intelligent flight recommendations and explanations.
@@ -87,9 +91,6 @@ The cheapest is option 3, but option 1 offers better value. Which do you prefer?
 - **Output**: Ranked flight options with explanations
 - **Features**: Price comparison, duration analysis, booking links
 
-<img width="1515" alt="Screenshot 2025-12-18 151852" src="https://github.com/user-attachments/assets/30ccae9b-7bdf-4910-b7cf-9f1f3322fcc3" />
-
-<img width="1915" height="946" alt="Screenshot 2025-12-18 151852" src="https://github.com/user-attachments/assets/bf66bb4f-afb2-4907-8da5-8bc0ba244d46" />
 
 
 ## Market Gap: 
