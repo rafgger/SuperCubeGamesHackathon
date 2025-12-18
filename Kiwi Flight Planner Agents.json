@@ -110,7 +110,7 @@
         "selected": false
       },
       "width": 300,
-      "height": 489,
+      "height": 488,
       "positionAbsolute": {
         "x": 800,
         "y": 303
@@ -122,7 +122,7 @@
       "id": "chatOpenAI_0",
       "position": {
         "x": 234.12561068257338,
-        "y": 263.5767437883005
+        "y": 267.33763542229315
       },
       "type": "customNode",
       "data": {
@@ -423,11 +423,11 @@
         "selected": false
       },
       "width": 300,
-      "height": 676,
+      "height": 675,
       "selected": false,
       "positionAbsolute": {
         "x": 234.12561068257338,
-        "y": 263.5767437883005
+        "y": 267.33763542229315
       },
       "dragging": false
     },
@@ -529,7 +529,7 @@
         "selected": false
       },
       "width": 300,
-      "height": 728,
+      "height": 727,
       "positionAbsolute": {
         "x": 1552.491685157949,
         "y": 430.9985476164123
@@ -597,7 +597,7 @@
         "selected": false
       },
       "width": 300,
-      "height": 577,
+      "height": 576,
       "selected": false,
       "positionAbsolute": {
         "x": 810.3069928693616,
@@ -703,7 +703,7 @@
         "selected": false
       },
       "width": 300,
-      "height": 728,
+      "height": 727,
       "selected": false,
       "positionAbsolute": {
         "x": 2058.579167053028,
@@ -839,18 +839,20 @@
         "inputs": {
           "workerName": "Local Guide",
           "workerPrompt": "You are a Local Guide and Travel Expert. Your goal is to provide top-tier sightseeing, food, and cultural recommendations for a specific city. When a user asks for recommendations, provide a curated list of 3 must-see attractions and 1 hidden gem. Be enthusiastic and concise.",
-          "tools": "",
+          "tools": [
+            "{{serper_0.data.instance}}"
+          ],
           "supervisor": "{{supervisor_0.data.instance}}",
           "model": "",
           "promptValues": "",
-          "maxIterations": ""
+          "maxIterations": "3"
         },
         "outputAnchors": [],
         "outputs": {},
         "selected": false
       },
       "width": 300,
-      "height": 728,
+      "height": 727,
       "selected": false,
       "positionAbsolute": {
         "x": 2722.639110249576,
@@ -859,118 +861,59 @@
       "dragging": false
     },
     {
-      "id": "serpApi_0",
+      "id": "serper_0",
       "position": {
-        "x": 2279.1788002895582,
-        "y": -113.4573941593357
+        "x": 2298.5204132359795,
+        "y": 62.58827248852782
       },
       "type": "customNode",
       "data": {
-        "id": "serpApi_0",
-        "label": "SerpApi For Web Search",
-        "version": 2,
-        "name": "serpApi",
-        "type": "Document",
+        "id": "serper_0",
+        "label": "Serper",
+        "version": 1,
+        "name": "serper",
+        "type": "Serper",
         "baseClasses": [
-          "Document"
+          "Serper",
+          "Tool",
+          "StructuredTool",
+          "Runnable"
         ],
-        "category": "Document Loaders",
-        "description": "Load and process data from web search results",
+        "category": "Tools",
+        "description": "Wrapper around Serper.dev - Google Search API",
         "inputParams": [
           {
             "label": "Connect Credential",
             "name": "credential",
             "type": "credential",
-            "optional": false,
             "credentialNames": [
-              "serpApi"
+              "serperApi"
             ],
-            "id": "serpApi_0-input-credential-credential",
-            "display": true
-          },
-          {
-            "label": "Query",
-            "name": "query",
-            "type": "string",
-            "id": "serpApi_0-input-query-string",
-            "display": true
-          },
-          {
-            "label": "Additional Metadata",
-            "name": "metadata",
-            "type": "json",
-            "description": "Additional metadata to be added to the extracted documents",
-            "optional": true,
-            "additionalParams": true,
-            "id": "serpApi_0-input-metadata-json",
-            "display": true
-          },
-          {
-            "label": "Omit Metadata Keys",
-            "name": "omitMetadataKeys",
-            "type": "string",
-            "rows": 4,
-            "description": "Each document loader comes with a default set of metadata keys that are extracted from the document. You can use this field to omit some of the default metadata keys. The value should be a list of keys, seperated by comma. Use * to omit all metadata keys execept the ones you specify in the Additional Metadata field",
-            "placeholder": "key1, key2, key3.nestedKey1",
-            "optional": true,
-            "additionalParams": true,
-            "id": "serpApi_0-input-omitMetadataKeys-string",
+            "id": "serper_0-input-credential-credential",
             "display": true
           }
         ],
-        "inputAnchors": [
-          {
-            "label": "Text Splitter",
-            "name": "textSplitter",
-            "type": "TextSplitter",
-            "optional": true,
-            "id": "serpApi_0-input-textSplitter-TextSplitter",
-            "display": true
-          }
-        ],
-        "inputs": {
-          "query": "find the city highlights",
-          "textSplitter": "",
-          "metadata": "",
-          "omitMetadataKeys": ""
-        },
+        "inputAnchors": [],
+        "inputs": {},
         "outputAnchors": [
           {
-            "name": "output",
-            "label": "Output",
-            "type": "options",
-            "description": "Array of document objects containing metadata and pageContent",
-            "options": [
-              {
-                "id": "serpApi_0-output-document-Document|json",
-                "name": "document",
-                "label": "Document",
-                "description": "Array of document objects containing metadata and pageContent",
-                "type": "Document | json"
-              },
-              {
-                "id": "serpApi_0-output-text-string|json",
-                "name": "text",
-                "label": "Text",
-                "description": "Concatenated string from pageContent of documents",
-                "type": "string | json"
-              }
-            ],
-            "default": "document"
+            "id": "serper_0-output-serper-Serper|Tool|StructuredTool|Runnable",
+            "name": "serper",
+            "label": "Serper",
+            "description": "Wrapper around Serper.dev - Google Search API",
+            "type": "Serper | Tool | StructuredTool | Runnable"
           }
         ],
-        "outputs": {
-          "output": "text"
-        },
+        "outputs": {},
         "selected": false
       },
       "width": 300,
-      "height": 510,
-      "selected": false,
+      "height": 281,
       "positionAbsolute": {
-        "x": 2279.1788002895582,
-        "y": -113.4573941593357
+        "x": 2298.5204132359795,
+        "y": 62.58827248852782
       },
+      "selected": false,
       "dragging": false
     }
   ],
@@ -1024,20 +967,20 @@
       "id": "inMemoryCache_0-inMemoryCache_0-output-inMemoryCache-InMemoryCache|BaseCache-chatOpenAI_0-chatOpenAI_0-input-cache-BaseCache"
     },
     {
-      "source": "serpApi_0",
-      "sourceHandle": "serpApi_0-output-text-string|json",
-      "target": "worker_2",
-      "targetHandle": "worker_2-input-promptValues-json",
-      "type": "buttonedge",
-      "id": "serpApi_0-serpApi_0-output-text-string|json-worker_2-worker_2-input-promptValues-json"
-    },
-    {
       "source": "supervisor_0",
       "sourceHandle": "supervisor_0-output-supervisor-Supervisor",
       "target": "worker_2",
       "targetHandle": "worker_2-input-supervisor-Supervisor",
       "type": "buttonedge",
       "id": "supervisor_0-supervisor_0-output-supervisor-Supervisor-worker_2-worker_2-input-supervisor-Supervisor"
+    },
+    {
+      "source": "serper_0",
+      "sourceHandle": "serper_0-output-serper-Serper|Tool|StructuredTool|Runnable",
+      "target": "worker_2",
+      "targetHandle": "worker_2-input-tools-Tool",
+      "type": "buttonedge",
+      "id": "serper_0-serper_0-output-serper-Serper|Tool|StructuredTool|Runnable-worker_2-worker_2-input-tools-Tool"
     }
   ]
 }
