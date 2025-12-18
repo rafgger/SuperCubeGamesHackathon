@@ -2,9 +2,6 @@
 
 A conversational flight planning application built with Flowise AI that uses the Kiwi MCP Server to search and recommend flights through natural language interactions.
 
-## Market Gap: 
-
-ChatGPT doesn't book flights well: https://chatgpt.com/share/6943e6f3-262c-800e-a5f1-45f11446254d , as well Gemini (which is better) https://gemini.google.com/share/4521ed6f3292 and Claude https://claude.ai/share/ecc17eae-443a-4308-a30c-80f9f14ff671 .
 
 ## Overview
 
@@ -86,6 +83,15 @@ The cheapest is option 3, but option 1 offers better value. Which do you prefer?
 - **Tools**: Kiwi MCP Server integration
 - **Output**: Ranked flight options with explanations
 - **Features**: Price comparison, duration analysis, booking links
+
+![IMG_20251218_091453](https://github.com/user-attachments/assets/30ccae9b-7bdf-4910-b7cf-9f1f3322fcc3)
+
+<img width="1915" height="946" alt="Screenshot 2025-12-18 151852" src="https://github.com/user-attachments/assets/bf66bb4f-afb2-4907-8da5-8bc0ba244d46" />
+
+
+## Market Gap: 
+
+ChatGPT doesn't book flights well: https://chatgpt.com/share/6943e6f3-262c-800e-a5f1-45f11446254d , as well Gemini (which is better) https://gemini.google.com/share/4521ed6f3292 and Claude https://claude.ai/share/ecc17eae-443a-4308-a30c-80f9f14ff671 .
 
 ## Supported Features
 
