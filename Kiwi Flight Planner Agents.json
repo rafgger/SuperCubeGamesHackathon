@@ -90,7 +90,7 @@
         ],
         "inputs": {
           "supervisorName": "Supervisor",
-          "supervisorPrompt": "You are a supervisor tasked with managing a conversation between the following workers: {team_members}.\nGiven the following user request, respond with the worker to act next.\nEach worker will perform a task and respond with their results and status.\nWhen finished, respond with FINISH.\nSelect strategically to minimize the number of steps taken.\n\nYou start with the Trip Planner and continue with the Flight Search Agent.",
+          "supervisorPrompt": "You are a supervisor tasked with managing a conversation between the following workers: {team_members}.\nGiven the following user request, respond with the worker to act next.\nEach worker will perform a task and respond with their results and status.\nWhen finished, respond with FINISH.\nSelect strategically to minimize the number of steps taken.\n\nCRITICAL RULE: If you need to ask the user for permission to search for highlights, you MUST respond with the question and then immediately respond with FINISH. Do NOT assign a task to the 'Local Guide' until the user provides a new request with a 'yes'. Treat the request for permission as the final step of the current interaction.",
           "model": "{{chatOpenAI_0.data.instance}}",
           "agentMemory": "",
           "summarization": "",
@@ -434,8 +434,8 @@
     {
       "id": "worker_0",
       "position": {
-        "x": 1325.4732646038237,
-        "y": 425.21463881248553
+        "x": 1552.491685157949,
+        "y": 430.9985476164123
       },
       "type": "customNode",
       "data": {
@@ -531,8 +531,8 @@
       "width": 300,
       "height": 728,
       "positionAbsolute": {
-        "x": 1325.4732646038237,
-        "y": 425.21463881248553
+        "x": 1552.491685157949,
+        "y": 430.9985476164123
       },
       "selected": false,
       "dragging": false
@@ -608,8 +608,8 @@
     {
       "id": "worker_1",
       "position": {
-        "x": 1833.0067236998843,
-        "y": 447.0713659401497
+        "x": 2058.579167053028,
+        "y": 432.6115939303327
       },
       "type": "customNode",
       "data": {
@@ -706,8 +706,8 @@
       "height": 728,
       "selected": false,
       "positionAbsolute": {
-        "x": 1833.0067236998843,
-        "y": 447.0713659401497
+        "x": 2058.579167053028,
+        "y": 432.6115939303327
       },
       "dragging": false
     },
@@ -751,6 +751,225 @@
       "positionAbsolute": {
         "x": -329.5939009348611,
         "y": 257.079935678948
+      },
+      "dragging": false
+    },
+    {
+      "id": "worker_2",
+      "position": {
+        "x": 2722.639110249576,
+        "y": 465.14196591211487
+      },
+      "type": "customNode",
+      "data": {
+        "id": "worker_2",
+        "label": "Worker",
+        "version": 2,
+        "name": "worker",
+        "type": "Worker",
+        "hideOutput": true,
+        "baseClasses": [
+          "Worker"
+        ],
+        "category": "Multi Agents",
+        "inputParams": [
+          {
+            "label": "Worker Name",
+            "name": "workerName",
+            "type": "string",
+            "placeholder": "Worker",
+            "id": "worker_2-input-workerName-string",
+            "display": true
+          },
+          {
+            "label": "Worker Prompt",
+            "name": "workerPrompt",
+            "type": "string",
+            "rows": 4,
+            "default": "You are a research assistant who can search for up-to-date info using search engine.",
+            "id": "worker_2-input-workerPrompt-string",
+            "display": true
+          },
+          {
+            "label": "Format Prompt Values",
+            "name": "promptValues",
+            "type": "json",
+            "optional": true,
+            "acceptVariable": true,
+            "list": true,
+            "id": "worker_2-input-promptValues-json",
+            "display": true
+          },
+          {
+            "label": "Max Iterations",
+            "name": "maxIterations",
+            "type": "number",
+            "optional": true,
+            "id": "worker_2-input-maxIterations-number",
+            "display": true
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Tools",
+            "name": "tools",
+            "type": "Tool",
+            "list": true,
+            "optional": true,
+            "id": "worker_2-input-tools-Tool",
+            "display": true
+          },
+          {
+            "label": "Supervisor",
+            "name": "supervisor",
+            "type": "Supervisor",
+            "id": "worker_2-input-supervisor-Supervisor",
+            "display": true
+          },
+          {
+            "label": "Tool Calling Chat Model",
+            "name": "model",
+            "type": "BaseChatModel",
+            "optional": true,
+            "description": "Only compatible with models that are capable of function calling: ChatOpenAI, ChatMistral, ChatAnthropic, ChatGoogleGenerativeAI, ChatVertexAI, GroqChat. If not specified, supervisor's model will be used",
+            "id": "worker_2-input-model-BaseChatModel",
+            "display": true
+          }
+        ],
+        "inputs": {
+          "workerName": "Local Guide",
+          "workerPrompt": "You are a Local Guide and Travel Expert. Your goal is to provide top-tier sightseeing, food, and cultural recommendations for a specific city. When a user asks for recommendations, provide a curated list of 3 must-see attractions and 1 hidden gem. Be enthusiastic and concise.",
+          "tools": "",
+          "supervisor": "{{supervisor_0.data.instance}}",
+          "model": "",
+          "promptValues": "",
+          "maxIterations": ""
+        },
+        "outputAnchors": [],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 728,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2722.639110249576,
+        "y": 465.14196591211487
+      },
+      "dragging": false
+    },
+    {
+      "id": "serpApi_0",
+      "position": {
+        "x": 2279.1788002895582,
+        "y": -113.4573941593357
+      },
+      "type": "customNode",
+      "data": {
+        "id": "serpApi_0",
+        "label": "SerpApi For Web Search",
+        "version": 2,
+        "name": "serpApi",
+        "type": "Document",
+        "baseClasses": [
+          "Document"
+        ],
+        "category": "Document Loaders",
+        "description": "Load and process data from web search results",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "optional": false,
+            "credentialNames": [
+              "serpApi"
+            ],
+            "id": "serpApi_0-input-credential-credential",
+            "display": true
+          },
+          {
+            "label": "Query",
+            "name": "query",
+            "type": "string",
+            "id": "serpApi_0-input-query-string",
+            "display": true
+          },
+          {
+            "label": "Additional Metadata",
+            "name": "metadata",
+            "type": "json",
+            "description": "Additional metadata to be added to the extracted documents",
+            "optional": true,
+            "additionalParams": true,
+            "id": "serpApi_0-input-metadata-json",
+            "display": true
+          },
+          {
+            "label": "Omit Metadata Keys",
+            "name": "omitMetadataKeys",
+            "type": "string",
+            "rows": 4,
+            "description": "Each document loader comes with a default set of metadata keys that are extracted from the document. You can use this field to omit some of the default metadata keys. The value should be a list of keys, seperated by comma. Use * to omit all metadata keys execept the ones you specify in the Additional Metadata field",
+            "placeholder": "key1, key2, key3.nestedKey1",
+            "optional": true,
+            "additionalParams": true,
+            "id": "serpApi_0-input-omitMetadataKeys-string",
+            "display": true
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Text Splitter",
+            "name": "textSplitter",
+            "type": "TextSplitter",
+            "optional": true,
+            "id": "serpApi_0-input-textSplitter-TextSplitter",
+            "display": true
+          }
+        ],
+        "inputs": {
+          "query": "find the city highlights",
+          "textSplitter": "",
+          "metadata": "",
+          "omitMetadataKeys": ""
+        },
+        "outputAnchors": [
+          {
+            "name": "output",
+            "label": "Output",
+            "type": "options",
+            "description": "Array of document objects containing metadata and pageContent",
+            "options": [
+              {
+                "id": "serpApi_0-output-document-Document|json",
+                "name": "document",
+                "label": "Document",
+                "description": "Array of document objects containing metadata and pageContent",
+                "type": "Document | json"
+              },
+              {
+                "id": "serpApi_0-output-text-string|json",
+                "name": "text",
+                "label": "Text",
+                "description": "Concatenated string from pageContent of documents",
+                "type": "string | json"
+              }
+            ],
+            "default": "document"
+          }
+        ],
+        "outputs": {
+          "output": "text"
+        },
+        "selected": false
+      },
+      "width": 300,
+      "height": 510,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2279.1788002895582,
+        "y": -113.4573941593357
       },
       "dragging": false
     }
@@ -803,6 +1022,22 @@
       "targetHandle": "chatOpenAI_0-input-cache-BaseCache",
       "type": "buttonedge",
       "id": "inMemoryCache_0-inMemoryCache_0-output-inMemoryCache-InMemoryCache|BaseCache-chatOpenAI_0-chatOpenAI_0-input-cache-BaseCache"
+    },
+    {
+      "source": "serpApi_0",
+      "sourceHandle": "serpApi_0-output-text-string|json",
+      "target": "worker_2",
+      "targetHandle": "worker_2-input-promptValues-json",
+      "type": "buttonedge",
+      "id": "serpApi_0-serpApi_0-output-text-string|json-worker_2-worker_2-input-promptValues-json"
+    },
+    {
+      "source": "supervisor_0",
+      "sourceHandle": "supervisor_0-output-supervisor-Supervisor",
+      "target": "worker_2",
+      "targetHandle": "worker_2-input-supervisor-Supervisor",
+      "type": "buttonedge",
+      "id": "supervisor_0-supervisor_0-output-supervisor-Supervisor-worker_2-worker_2-input-supervisor-Supervisor"
     }
   ]
 }
