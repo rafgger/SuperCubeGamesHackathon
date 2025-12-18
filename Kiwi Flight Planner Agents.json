@@ -622,9 +622,7 @@
         "inputs": {
           "workerName": "",
           "workerPrompt": "You are a research assistant who can search for up-to-date info using search engine.",
-          "tools": [
-            "{{customMCP_0.data.instance}}"
-          ],
+          "tools": [],
           "supervisor": "",
           "model": "",
           "promptValues": "",
@@ -640,13 +638,14 @@
         "x": 1840.957425823257,
         "y": 486.87900516851795
       },
-      "selected": false
+      "selected": false,
+      "dragging": false
     },
     {
       "id": "customMCP_0",
       "position": {
-        "x": 645.5684367383681,
-        "y": 969.2302192656916
+        "x": 810.3069928693616,
+        "y": 888.1281608627404
       },
       "type": "customNode",
       "data": {
@@ -686,8 +685,8 @@
         ],
         "inputAnchors": [],
         "inputs": {
-          "mcpServerConfig": "{\n  \"mcpServers\": {\n    \"kiwi-com-flight-search\": {\n      \"url\": \"https://mcp.kiwi.com\"\n    }\n  }\n}",
-          "mcpActions": ""
+          "mcpServerConfig": "{\n  \"url\": \"https://mcp.kiwi.com\",\n  \"headers\": {}\n}",
+          "mcpActions": "[\"search-flight\"]"
         },
         "outputAnchors": [
           {
@@ -702,11 +701,11 @@
         "selected": false
       },
       "width": 300,
-      "height": 549,
+      "height": 577,
       "selected": false,
       "positionAbsolute": {
-        "x": 645.5684367383681,
-        "y": 969.2302192656916
+        "x": 810.3069928693616,
+        "y": 888.1281608627404
       },
       "dragging": false
     }
@@ -735,14 +734,6 @@
       "targetHandle": "worker_0-input-tools-Tool",
       "type": "buttonedge",
       "id": "customMCP_0-customMCP_0-output-customMCP-Tool-worker_0-worker_0-input-tools-Tool"
-    },
-    {
-      "source": "customMCP_0",
-      "sourceHandle": "customMCP_0-output-customMCP-Tool",
-      "target": "worker_1",
-      "targetHandle": "worker_1-input-tools-Tool",
-      "type": "buttonedge",
-      "id": "customMCP_0-customMCP_0-output-customMCP-Tool-worker_1-worker_1-input-tools-Tool"
     }
   ]
 }
