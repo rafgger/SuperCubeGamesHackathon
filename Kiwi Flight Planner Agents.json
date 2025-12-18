@@ -90,7 +90,7 @@
         ],
         "inputs": {
           "supervisorName": "Supervisor",
-          "supervisorPrompt": "You are a supervisor tasked with managing a conversation between the following workers: {team_members}.\nGiven the following user request, respond with the worker to act next.\nEach worker will perform a task and respond with their results and status.\nWhen finished, respond with FINISH.\nSelect strategically to minimize the number of steps taken.\n\nYou start with the planning agent.",
+          "supervisorPrompt": "You are a supervisor tasked with managing a conversation between the following workers: {team_members}.\nGiven the following user request, respond with the worker to act next.\nEach worker will perform a task and respond with their results and status.\nWhen finished, respond with FINISH.\nSelect strategically to minimize the number of steps taken.\n\nYou start with the Trip Planner and continue with the Flight Search Agent.",
           "model": "{{chatOpenAI_0.data.instance}}",
           "agentMemory": "",
           "summarization": "",
@@ -121,8 +121,8 @@
     {
       "id": "chatOpenAI_0",
       "position": {
-        "x": 183.7309896058864,
-        "y": 214.28397960969676
+        "x": 234.12561068257338,
+        "y": 263.5767437883005
       },
       "type": "customNode",
       "data": {
@@ -390,7 +390,7 @@
           }
         ],
         "inputs": {
-          "cache": "",
+          "cache": "{{inMemoryCache_0.data.instance}}",
           "modelName": "gpt-4o-mini",
           "temperature": 0.9,
           "streaming": true,
@@ -406,7 +406,7 @@
           "baseOptions": "",
           "allowImageUploads": "",
           "imageResolution": "low",
-          "reasoning": "",
+          "reasoning": false,
           "reasoningEffort": "",
           "reasoningSummary": ""
         },
@@ -426,8 +426,8 @@
       "height": 676,
       "selected": false,
       "positionAbsolute": {
-        "x": 183.7309896058864,
-        "y": 214.28397960969676
+        "x": 234.12561068257338,
+        "y": 263.5767437883005
       },
       "dragging": false
     },
@@ -435,7 +435,7 @@
       "id": "worker_0",
       "position": {
         "x": 1325.4732646038237,
-        "y": 426.6627442260616
+        "y": 425.21463881248553
       },
       "type": "customNode",
       "data": {
@@ -514,7 +514,7 @@
           }
         ],
         "inputs": {
-          "workerName": "Trip planner",
+          "workerName": "Trip Planner",
           "workerPrompt": "You are a Trip Planner agent.\n\nYour job is to convert user travel requests into structured flight search parameters.\nIf required information is missing, ask a clarification question instead of returning JSON.\n\nRequired fields:\n- origin (IATA code)\n- destination (IATA code)\n- date_from or date_range\n\nWhen ready, return VALID JSON ONLY.\nDo not invent values.",
           "tools": [
             "{{customMCP_0.data.instance}}"
@@ -522,7 +522,7 @@
           "supervisor": "{{supervisor_0.data.instance}}",
           "model": "",
           "promptValues": "",
-          "maxIterations": ""
+          "maxIterations": "3"
         },
         "outputAnchors": [],
         "outputs": {},
@@ -532,16 +532,84 @@
       "height": 728,
       "positionAbsolute": {
         "x": 1325.4732646038237,
-        "y": 426.6627442260616
+        "y": 425.21463881248553
       },
       "selected": false,
       "dragging": false
     },
     {
+      "id": "customMCP_0",
+      "position": {
+        "x": 810.3069928693616,
+        "y": 888.1281608627404
+      },
+      "type": "customNode",
+      "data": {
+        "id": "customMCP_0",
+        "label": "Custom MCP",
+        "version": 1.1,
+        "name": "customMCP",
+        "type": "Custom MCP Tool",
+        "baseClasses": [
+          "Tool"
+        ],
+        "category": "Tools (MCP)",
+        "description": "Custom MCP Config",
+        "inputParams": [
+          {
+            "label": "MCP Server Config",
+            "name": "mcpServerConfig",
+            "type": "code",
+            "hideCodeExecute": true,
+            "hint": {
+              "label": "How to use",
+              "value": "\nYou can use variables in the MCP Server Config with double curly braces `{{ }}` and prefix `$vars.<variableName>`. \n\nFor example, you have a variable called \"var1\":\n```json\n{\n    \"command\": \"docker\",\n    \"args\": [\n        \"run\",\n        \"-i\",\n        \"--rm\",\n        \"-e\", \"API_TOKEN\"\n    ],\n    \"env\": {\n        \"API_TOKEN\": \"{{$vars.var1}}\"\n    }\n}\n```\n\nFor example, when using SSE, you can use the variable \"var1\" in the headers:\n```json\n{\n    \"url\": \"https://api.example.com/endpoint/sse\",\n    \"headers\": {\n        \"Authorization\": \"Bearer {{$vars.var1}}\"\n    }\n}\n```\n"
+            },
+            "placeholder": "{\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"/path/to/allowed/files\"]\n}",
+            "id": "customMCP_0-input-mcpServerConfig-code",
+            "display": true
+          },
+          {
+            "label": "Available Actions",
+            "name": "mcpActions",
+            "type": "asyncMultiOptions",
+            "loadMethod": "listActions",
+            "refresh": true,
+            "id": "customMCP_0-input-mcpActions-asyncMultiOptions",
+            "display": true
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "mcpServerConfig": "{\n  \"url\": \"https://mcp.kiwi.com\",\n  \"headers\": {}\n}",
+          "mcpActions": "[\"search-flight\"]"
+        },
+        "outputAnchors": [
+          {
+            "id": "customMCP_0-output-customMCP-Tool",
+            "name": "customMCP",
+            "label": "Custom MCP Tool",
+            "description": "Custom MCP Config",
+            "type": "Tool"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 577,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 810.3069928693616,
+        "y": 888.1281608627404
+      },
+      "dragging": false
+    },
+    {
       "id": "worker_1",
       "position": {
-        "x": 1840.957425823257,
-        "y": 486.87900516851795
+        "x": 1833.0067236998843,
+        "y": 447.0713659401497
       },
       "type": "customNode",
       "data": {
@@ -620,13 +688,15 @@
           }
         ],
         "inputs": {
-          "workerName": "",
-          "workerPrompt": "You are a research assistant who can search for up-to-date info using search engine.",
-          "tools": [],
-          "supervisor": "",
+          "workerName": "Flight Search Agent",
+          "workerPrompt": "You are a Flight Search Agent.\n\nUse the Kiwi MCP Server tool to search for flights using the provided structured input.\nRank results based on user preferences.\nExplain trade-offs clearly and concisely.\n\nNever invent prices, routes, airlines, or links.\nAlways include price, stops, total travel time, and a Kiwi deep link.",
+          "tools": [
+            "{{customMCP_0.data.instance}}"
+          ],
+          "supervisor": "{{supervisor_0.data.instance}}",
           "model": "",
           "promptValues": "",
-          "maxIterations": ""
+          "maxIterations": "3"
         },
         "outputAnchors": [],
         "outputs": {},
@@ -634,78 +704,53 @@
       },
       "width": 300,
       "height": 728,
-      "positionAbsolute": {
-        "x": 1840.957425823257,
-        "y": 486.87900516851795
-      },
       "selected": false,
+      "positionAbsolute": {
+        "x": 1833.0067236998843,
+        "y": 447.0713659401497
+      },
       "dragging": false
     },
     {
-      "id": "customMCP_0",
+      "id": "inMemoryCache_0",
       "position": {
-        "x": 810.3069928693616,
-        "y": 888.1281608627404
+        "x": -329.5939009348611,
+        "y": 257.079935678948
       },
       "type": "customNode",
       "data": {
-        "id": "customMCP_0",
-        "label": "Custom MCP",
-        "version": 1.1,
-        "name": "customMCP",
-        "type": "Custom MCP Tool",
+        "id": "inMemoryCache_0",
+        "label": "InMemory Cache",
+        "version": 1,
+        "name": "inMemoryCache",
+        "type": "InMemoryCache",
         "baseClasses": [
-          "Tool"
+          "InMemoryCache",
+          "BaseCache"
         ],
-        "category": "Tools (MCP)",
-        "description": "Custom MCP Config",
-        "inputParams": [
-          {
-            "label": "MCP Server Config",
-            "name": "mcpServerConfig",
-            "type": "code",
-            "hideCodeExecute": true,
-            "hint": {
-              "label": "How to use",
-              "value": "\nYou can use variables in the MCP Server Config with double curly braces `{{ }}` and prefix `$vars.<variableName>`. \n\nFor example, you have a variable called \"var1\":\n```json\n{\n    \"command\": \"docker\",\n    \"args\": [\n        \"run\",\n        \"-i\",\n        \"--rm\",\n        \"-e\", \"API_TOKEN\"\n    ],\n    \"env\": {\n        \"API_TOKEN\": \"{{$vars.var1}}\"\n    }\n}\n```\n\nFor example, when using SSE, you can use the variable \"var1\" in the headers:\n```json\n{\n    \"url\": \"https://api.example.com/endpoint/sse\",\n    \"headers\": {\n        \"Authorization\": \"Bearer {{$vars.var1}}\"\n    }\n}\n```\n"
-            },
-            "placeholder": "{\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"/path/to/allowed/files\"]\n}",
-            "id": "customMCP_0-input-mcpServerConfig-code",
-            "display": true
-          },
-          {
-            "label": "Available Actions",
-            "name": "mcpActions",
-            "type": "asyncMultiOptions",
-            "loadMethod": "listActions",
-            "refresh": true,
-            "id": "customMCP_0-input-mcpActions-asyncMultiOptions",
-            "display": true
-          }
-        ],
+        "category": "Cache",
+        "description": "Cache LLM response in memory, will be cleared once app restarted",
+        "inputParams": [],
         "inputAnchors": [],
-        "inputs": {
-          "mcpServerConfig": "{\n  \"url\": \"https://mcp.kiwi.com\",\n  \"headers\": {}\n}",
-          "mcpActions": "[\"search-flight\"]"
-        },
+        "inputs": {},
         "outputAnchors": [
           {
-            "id": "customMCP_0-output-customMCP-Tool",
-            "name": "customMCP",
-            "label": "Custom MCP Tool",
-            "description": "Custom MCP Config",
-            "type": "Tool"
+            "id": "inMemoryCache_0-output-inMemoryCache-InMemoryCache|BaseCache",
+            "name": "inMemoryCache",
+            "label": "InMemoryCache",
+            "description": "Cache LLM response in memory, will be cleared once app restarted",
+            "type": "InMemoryCache | BaseCache"
           }
         ],
         "outputs": {},
         "selected": false
       },
       "width": 300,
-      "height": 577,
+      "height": 149,
       "selected": false,
       "positionAbsolute": {
-        "x": 810.3069928693616,
-        "y": 888.1281608627404
+        "x": -329.5939009348611,
+        "y": 257.079935678948
       },
       "dragging": false
     }
@@ -734,6 +779,30 @@
       "targetHandle": "worker_0-input-tools-Tool",
       "type": "buttonedge",
       "id": "customMCP_0-customMCP_0-output-customMCP-Tool-worker_0-worker_0-input-tools-Tool"
+    },
+    {
+      "source": "supervisor_0",
+      "sourceHandle": "supervisor_0-output-supervisor-Supervisor",
+      "target": "worker_1",
+      "targetHandle": "worker_1-input-supervisor-Supervisor",
+      "type": "buttonedge",
+      "id": "supervisor_0-supervisor_0-output-supervisor-Supervisor-worker_1-worker_1-input-supervisor-Supervisor"
+    },
+    {
+      "source": "customMCP_0",
+      "sourceHandle": "customMCP_0-output-customMCP-Tool",
+      "target": "worker_1",
+      "targetHandle": "worker_1-input-tools-Tool",
+      "type": "buttonedge",
+      "id": "customMCP_0-customMCP_0-output-customMCP-Tool-worker_1-worker_1-input-tools-Tool"
+    },
+    {
+      "source": "inMemoryCache_0",
+      "sourceHandle": "inMemoryCache_0-output-inMemoryCache-InMemoryCache|BaseCache",
+      "target": "chatOpenAI_0",
+      "targetHandle": "chatOpenAI_0-input-cache-BaseCache",
+      "type": "buttonedge",
+      "id": "inMemoryCache_0-inMemoryCache_0-output-inMemoryCache-InMemoryCache|BaseCache-chatOpenAI_0-chatOpenAI_0-input-cache-BaseCache"
     }
   ]
 }
