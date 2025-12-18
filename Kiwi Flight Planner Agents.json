@@ -1,986 +1,1400 @@
 {
   "nodes": [
     {
-      "id": "supervisor_0",
+      "id": "startAgentflow_0",
+      "type": "agentFlow",
       "position": {
-        "x": 800,
-        "y": 303
+        "x": -274.32355252169333,
+        "y": 2.656886707231905
       },
-      "type": "customNode",
+      "width": 103,
+      "height": 66,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -274.32355252169333,
+        "y": 2.656886707231905
+      },
       "data": {
-        "id": "supervisor_0",
-        "label": "Supervisor",
-        "version": 3,
-        "name": "supervisor",
-        "type": "Supervisor",
+        "id": "startAgentflow_0",
+        "label": "Start",
+        "version": 1.1,
+        "name": "startAgentflow",
+        "type": "Start",
+        "color": "#7EE787",
+        "hideInput": true,
         "baseClasses": [
-          "Supervisor"
+          "Start"
         ],
-        "category": "Multi Agents",
+        "category": "Agent Flows",
+        "description": "Starting point of the agentflow",
         "inputParams": [
           {
-            "label": "Supervisor Name",
-            "name": "supervisorName",
-            "type": "string",
-            "placeholder": "Supervisor",
-            "default": "Supervisor",
-            "id": "supervisor_0-input-supervisorName-string",
+            "label": "Input Type",
+            "name": "startInputType",
+            "type": "options",
+            "options": [
+              {
+                "label": "Chat Input",
+                "name": "chatInput",
+                "description": "Start the conversation with chat input"
+              },
+              {
+                "label": "Form Input",
+                "name": "formInput",
+                "description": "Start the workflow with form inputs"
+              }
+            ],
+            "default": "chatInput",
+            "id": "startAgentflow_0-input-startInputType-options",
             "display": true
           },
           {
-            "label": "Supervisor Prompt",
-            "name": "supervisorPrompt",
+            "label": "Form Title",
+            "name": "formTitle",
             "type": "string",
-            "description": "Prompt must contains {team_members}",
-            "rows": 4,
-            "default": "You are a supervisor tasked with managing a conversation between the following workers: {team_members}.\nGiven the following user request, respond with the worker to act next.\nEach worker will perform a task and respond with their results and status.\nWhen finished, respond with FINISH.\nSelect strategically to minimize the number of steps taken.",
-            "additionalParams": true,
-            "id": "supervisor_0-input-supervisorPrompt-string",
-            "display": true
+            "placeholder": "Please Fill Out The Form",
+            "show": {
+              "startInputType": "formInput"
+            },
+            "id": "startAgentflow_0-input-formTitle-string",
+            "display": false
           },
           {
-            "label": "Summarization",
-            "name": "summarization",
+            "label": "Form Description",
+            "name": "formDescription",
+            "type": "string",
+            "placeholder": "Complete all fields below to continue",
+            "show": {
+              "startInputType": "formInput"
+            },
+            "id": "startAgentflow_0-input-formDescription-string",
+            "display": false
+          },
+          {
+            "label": "Form Input Types",
+            "name": "formInputTypes",
+            "description": "Specify the type of form input",
+            "type": "array",
+            "show": {
+              "startInputType": "formInput"
+            },
+            "array": [
+              {
+                "label": "Type",
+                "name": "type",
+                "type": "options",
+                "options": [
+                  {
+                    "label": "String",
+                    "name": "string"
+                  },
+                  {
+                    "label": "Number",
+                    "name": "number"
+                  },
+                  {
+                    "label": "Boolean",
+                    "name": "boolean"
+                  },
+                  {
+                    "label": "Options",
+                    "name": "options"
+                  }
+                ],
+                "default": "string"
+              },
+              {
+                "label": "Label",
+                "name": "label",
+                "type": "string",
+                "placeholder": "Label for the input"
+              },
+              {
+                "label": "Variable Name",
+                "name": "name",
+                "type": "string",
+                "placeholder": "Variable name for the input (must be camel case)",
+                "description": "Variable name must be camel case. For example: firstName, lastName, etc."
+              },
+              {
+                "label": "Add Options",
+                "name": "addOptions",
+                "type": "array",
+                "show": {
+                  "formInputTypes[$index].type": "options"
+                },
+                "array": [
+                  {
+                    "label": "Option",
+                    "name": "option",
+                    "type": "string"
+                  }
+                ]
+              }
+            ],
+            "id": "startAgentflow_0-input-formInputTypes-array",
+            "display": false
+          },
+          {
+            "label": "Ephemeral Memory",
+            "name": "startEphemeralMemory",
             "type": "boolean",
-            "description": "Return final output as a summarization of the conversation",
+            "description": "Start fresh for every execution without past chat history",
             "optional": true,
-            "additionalParams": true,
-            "id": "supervisor_0-input-summarization-boolean",
+            "id": "startAgentflow_0-input-startEphemeralMemory-boolean",
             "display": true
           },
           {
-            "label": "Recursion Limit",
-            "name": "recursionLimit",
-            "type": "number",
-            "description": "Maximum number of times a call can recurse. If not provided, defaults to 100.",
-            "default": 100,
-            "additionalParams": true,
-            "id": "supervisor_0-input-recursionLimit-number",
+            "label": "Flow State",
+            "name": "startState",
+            "description": "Runtime state during the execution of the workflow",
+            "type": "array",
+            "optional": true,
+            "array": [
+              {
+                "label": "Key",
+                "name": "key",
+                "type": "string",
+                "placeholder": "Foo"
+              },
+              {
+                "label": "Value",
+                "name": "value",
+                "type": "string",
+                "placeholder": "Bar",
+                "optional": true
+              }
+            ],
+            "id": "startAgentflow_0-input-startState-array",
+            "display": true
+          },
+          {
+            "label": "Persist State",
+            "name": "startPersistState",
+            "type": "boolean",
+            "description": "Persist the state in the same session",
+            "optional": true,
+            "id": "startAgentflow_0-input-startPersistState-boolean",
             "display": true
           }
         ],
-        "inputAnchors": [
-          {
-            "label": "Tool Calling Chat Model",
-            "name": "model",
-            "type": "BaseChatModel",
-            "description": "Only compatible with models that are capable of function calling: ChatOpenAI, ChatMistral, ChatAnthropic, ChatGoogleGenerativeAI, GroqChat. Best result with GPT-4 model",
-            "id": "supervisor_0-input-model-BaseChatModel",
-            "display": true
-          },
-          {
-            "label": "Agent Memory",
-            "name": "agentMemory",
-            "type": "BaseCheckpointSaver",
-            "description": "Save the state of the agent",
-            "optional": true,
-            "id": "supervisor_0-input-agentMemory-BaseCheckpointSaver",
-            "display": true
-          },
-          {
-            "label": "Input Moderation",
-            "description": "Detect text that could generate harmful output and prevent it from being sent to the language model",
-            "name": "inputModeration",
-            "type": "Moderation",
-            "optional": true,
-            "list": true,
-            "id": "supervisor_0-input-inputModeration-Moderation",
-            "display": true
-          }
-        ],
+        "inputAnchors": [],
         "inputs": {
-          "supervisorName": "Supervisor",
-          "supervisorPrompt": "You are a supervisor tasked with managing a conversation between the following workers: {team_members}.\nGiven the following user request, respond with the worker to act next.\nEach worker will perform a task and respond with their results and status.\nWhen finished, respond with FINISH.\nSelect strategically to minimize the number of steps taken.\n\nCRITICAL RULE: If you need to ask the user for permission to search for highlights, you MUST respond with the question and then immediately respond with FINISH. Do NOT assign a task to the 'Local Guide' until the user provides a new request with a 'yes'. Treat the request for permission as the final step of the current interaction.",
-          "model": "{{chatOpenAI_0.data.instance}}",
-          "agentMemory": "",
-          "summarization": "",
-          "recursionLimit": 100,
-          "inputModeration": ""
+          "startInputType": "chatInput",
+          "formTitle": "",
+          "formDescription": "",
+          "formInputTypes": "",
+          "startEphemeralMemory": "",
+          "startState": "",
+          "startPersistState": ""
         },
         "outputAnchors": [
           {
-            "id": "supervisor_0-output-supervisor-Supervisor",
-            "name": "supervisor",
-            "label": "Supervisor",
-            "description": "",
-            "type": "Supervisor"
+            "id": "startAgentflow_0-output-startAgentflow",
+            "label": "Start",
+            "name": "startAgentflow"
           }
         ],
         "outputs": {},
         "selected": false
       },
-      "width": 300,
-      "height": 488,
-      "positionAbsolute": {
-        "x": 800,
-        "y": 303
-      },
-      "selected": false,
       "dragging": false
     },
     {
-      "id": "chatOpenAI_0",
+      "id": "agentAgentflow_1",
       "position": {
-        "x": 234.12561068257338,
-        "y": 267.33763542229315
+        "x": 59.19186785659963,
+        "y": -21.63172020949294
       },
-      "type": "customNode",
       "data": {
-        "id": "chatOpenAI_0",
-        "label": "ChatOpenAI",
-        "version": 8.3,
-        "name": "chatOpenAI",
-        "type": "ChatOpenAI",
+        "id": "agentAgentflow_1",
+        "label": "Agent 1",
+        "version": 3.2,
+        "name": "agentAgentflow",
+        "type": "Agent",
+        "color": "#4DD0E1",
         "baseClasses": [
-          "ChatOpenAI",
-          "BaseChatOpenAI",
-          "BaseChatModel",
-          "BaseLanguageModel",
-          "Runnable"
+          "Agent"
         ],
-        "category": "Chat Models",
-        "description": "Wrapper around OpenAI large language models that use the Chat endpoint",
+        "category": "Agent Flows",
+        "description": "Dynamically choose and utilize tools during runtime, enabling multi-step reasoning",
         "inputParams": [
           {
-            "label": "Connect Credential",
-            "name": "credential",
-            "type": "credential",
-            "credentialNames": [
-              "openAIApi"
-            ],
-            "id": "chatOpenAI_0-input-credential-credential",
-            "display": true
-          },
-          {
-            "label": "Model Name",
-            "name": "modelName",
+            "label": "Model",
+            "name": "agentModel",
             "type": "asyncOptions",
             "loadMethod": "listModels",
-            "default": "gpt-4o-mini",
-            "id": "chatOpenAI_0-input-modelName-asyncOptions",
+            "loadConfig": true,
+            "id": "agentAgentflow_1-input-agentModel-asyncOptions",
             "display": true
           },
           {
-            "label": "Temperature",
-            "name": "temperature",
-            "type": "number",
-            "step": 0.1,
-            "default": 0.9,
+            "label": "Messages",
+            "name": "agentMessages",
+            "type": "array",
             "optional": true,
-            "id": "chatOpenAI_0-input-temperature-number",
+            "acceptVariable": true,
+            "array": [
+              {
+                "label": "Role",
+                "name": "role",
+                "type": "options",
+                "options": [
+                  {
+                    "label": "System",
+                    "name": "system"
+                  },
+                  {
+                    "label": "Assistant",
+                    "name": "assistant"
+                  },
+                  {
+                    "label": "Developer",
+                    "name": "developer"
+                  },
+                  {
+                    "label": "User",
+                    "name": "user"
+                  }
+                ]
+              },
+              {
+                "label": "Content",
+                "name": "content",
+                "type": "string",
+                "acceptVariable": true,
+                "generateInstruction": true,
+                "rows": 4
+              }
+            ],
+            "id": "agentAgentflow_1-input-agentMessages-array",
             "display": true
           },
           {
-            "label": "Streaming",
-            "name": "streaming",
+            "label": "OpenAI Built-in Tools",
+            "name": "agentToolsBuiltInOpenAI",
+            "type": "multiOptions",
+            "optional": true,
+            "options": [
+              {
+                "label": "Web Search",
+                "name": "web_search_preview",
+                "description": "Search the web for the latest information"
+              },
+              {
+                "label": "Code Interpreter",
+                "name": "code_interpreter",
+                "description": "Write and run Python code in a sandboxed environment"
+              },
+              {
+                "label": "Image Generation",
+                "name": "image_generation",
+                "description": "Generate images based on a text prompt"
+              }
+            ],
+            "show": {
+              "agentModel": "chatOpenAI"
+            },
+            "id": "agentAgentflow_1-input-agentToolsBuiltInOpenAI-multiOptions",
+            "display": true
+          },
+          {
+            "label": "Gemini Built-in Tools",
+            "name": "agentToolsBuiltInGemini",
+            "type": "multiOptions",
+            "optional": true,
+            "options": [
+              {
+                "label": "URL Context",
+                "name": "urlContext",
+                "description": "Extract content from given URLs"
+              },
+              {
+                "label": "Google Search",
+                "name": "googleSearch",
+                "description": "Search real-time web content"
+              },
+              {
+                "label": "Code Execution",
+                "name": "codeExecution",
+                "description": "Write and run Python code in a sandboxed environment"
+              }
+            ],
+            "show": {
+              "agentModel": "chatGoogleGenerativeAI"
+            },
+            "id": "agentAgentflow_1-input-agentToolsBuiltInGemini-multiOptions",
+            "display": false
+          },
+          {
+            "label": "Anthropic Built-in Tools",
+            "name": "agentToolsBuiltInAnthropic",
+            "type": "multiOptions",
+            "optional": true,
+            "options": [
+              {
+                "label": "Web Search",
+                "name": "web_search_20250305",
+                "description": "Search the web for the latest information"
+              },
+              {
+                "label": "Web Fetch",
+                "name": "web_fetch_20250910",
+                "description": "Retrieve full content from specified web pages"
+              }
+            ],
+            "show": {
+              "agentModel": "chatAnthropic"
+            },
+            "id": "agentAgentflow_1-input-agentToolsBuiltInAnthropic-multiOptions",
+            "display": false
+          },
+          {
+            "label": "Tools",
+            "name": "agentTools",
+            "type": "array",
+            "optional": true,
+            "array": [
+              {
+                "label": "Tool",
+                "name": "agentSelectedTool",
+                "type": "asyncOptions",
+                "loadMethod": "listTools",
+                "loadConfig": true
+              },
+              {
+                "label": "Require Human Input",
+                "name": "agentSelectedToolRequiresHumanInput",
+                "type": "boolean",
+                "optional": true
+              }
+            ],
+            "id": "agentAgentflow_1-input-agentTools-array",
+            "display": true
+          },
+          {
+            "label": "Knowledge (Document Stores)",
+            "name": "agentKnowledgeDocumentStores",
+            "type": "array",
+            "description": "Give your agent context about different document sources. Document stores must be upserted in advance.",
+            "array": [
+              {
+                "label": "Document Store",
+                "name": "documentStore",
+                "type": "asyncOptions",
+                "loadMethod": "listStores"
+              },
+              {
+                "label": "Describe Knowledge",
+                "name": "docStoreDescription",
+                "type": "string",
+                "generateDocStoreDescription": true,
+                "placeholder": "Describe what the knowledge base is about, this is useful for the AI to know when and how to search for correct information",
+                "rows": 4
+              },
+              {
+                "label": "Return Source Documents",
+                "name": "returnSourceDocuments",
+                "type": "boolean",
+                "optional": true
+              }
+            ],
+            "optional": true,
+            "id": "agentAgentflow_1-input-agentKnowledgeDocumentStores-array",
+            "display": true
+          },
+          {
+            "label": "Knowledge (Vector Embeddings)",
+            "name": "agentKnowledgeVSEmbeddings",
+            "type": "array",
+            "description": "Give your agent context about different document sources from existing vector stores and embeddings",
+            "array": [
+              {
+                "label": "Vector Store",
+                "name": "vectorStore",
+                "type": "asyncOptions",
+                "loadMethod": "listVectorStores",
+                "loadConfig": true
+              },
+              {
+                "label": "Embedding Model",
+                "name": "embeddingModel",
+                "type": "asyncOptions",
+                "loadMethod": "listEmbeddings",
+                "loadConfig": true
+              },
+              {
+                "label": "Knowledge Name",
+                "name": "knowledgeName",
+                "type": "string",
+                "placeholder": "A short name for the knowledge base, this is useful for the AI to know when and how to search for correct information"
+              },
+              {
+                "label": "Describe Knowledge",
+                "name": "knowledgeDescription",
+                "type": "string",
+                "placeholder": "Describe what the knowledge base is about, this is useful for the AI to know when and how to search for correct information",
+                "rows": 4
+              },
+              {
+                "label": "Return Source Documents",
+                "name": "returnSourceDocuments",
+                "type": "boolean",
+                "optional": true
+              }
+            ],
+            "optional": true,
+            "id": "agentAgentflow_1-input-agentKnowledgeVSEmbeddings-array",
+            "display": true
+          },
+          {
+            "label": "Enable Memory",
+            "name": "agentEnableMemory",
             "type": "boolean",
+            "description": "Enable memory for the conversation thread",
             "default": true,
             "optional": true,
-            "additionalParams": true,
-            "id": "chatOpenAI_0-input-streaming-boolean",
+            "id": "agentAgentflow_1-input-agentEnableMemory-boolean",
             "display": true
           },
           {
-            "label": "Max Tokens",
-            "name": "maxTokens",
+            "label": "Memory Type",
+            "name": "agentMemoryType",
+            "type": "options",
+            "options": [
+              {
+                "label": "All Messages",
+                "name": "allMessages",
+                "description": "Retrieve all messages from the conversation"
+              },
+              {
+                "label": "Window Size",
+                "name": "windowSize",
+                "description": "Uses a fixed window size to surface the last N messages"
+              },
+              {
+                "label": "Conversation Summary",
+                "name": "conversationSummary",
+                "description": "Summarizes the whole conversation"
+              },
+              {
+                "label": "Conversation Summary Buffer",
+                "name": "conversationSummaryBuffer",
+                "description": "Summarize conversations once token limit is reached. Default to 2000"
+              }
+            ],
+            "optional": true,
+            "default": "allMessages",
+            "show": {
+              "agentEnableMemory": true
+            },
+            "id": "agentAgentflow_1-input-agentMemoryType-options",
+            "display": true
+          },
+          {
+            "label": "Window Size",
+            "name": "agentMemoryWindowSize",
             "type": "number",
-            "step": 1,
-            "optional": true,
-            "additionalParams": true,
-            "id": "chatOpenAI_0-input-maxTokens-number",
-            "display": true
+            "default": "20",
+            "description": "Uses a fixed window size to surface the last N messages",
+            "show": {
+              "agentMemoryType": "windowSize"
+            },
+            "id": "agentAgentflow_1-input-agentMemoryWindowSize-number",
+            "display": false
           },
           {
-            "label": "Top Probability",
-            "name": "topP",
+            "label": "Max Token Limit",
+            "name": "agentMemoryMaxTokenLimit",
             "type": "number",
-            "step": 0.1,
-            "optional": true,
-            "additionalParams": true,
-            "id": "chatOpenAI_0-input-topP-number",
-            "display": true
+            "default": "2000",
+            "description": "Summarize conversations once token limit is reached. Default to 2000",
+            "show": {
+              "agentMemoryType": "conversationSummaryBuffer"
+            },
+            "id": "agentAgentflow_1-input-agentMemoryMaxTokenLimit-number",
+            "display": false
           },
           {
-            "label": "Frequency Penalty",
-            "name": "frequencyPenalty",
-            "type": "number",
-            "step": 0.1,
-            "optional": true,
-            "additionalParams": true,
-            "id": "chatOpenAI_0-input-frequencyPenalty-number",
-            "display": true
-          },
-          {
-            "label": "Presence Penalty",
-            "name": "presencePenalty",
-            "type": "number",
-            "step": 0.1,
-            "optional": true,
-            "additionalParams": true,
-            "id": "chatOpenAI_0-input-presencePenalty-number",
-            "display": true
-          },
-          {
-            "label": "Timeout",
-            "name": "timeout",
-            "type": "number",
-            "step": 1,
-            "optional": true,
-            "additionalParams": true,
-            "id": "chatOpenAI_0-input-timeout-number",
-            "display": true
-          },
-          {
-            "label": "Strict Tool Calling",
-            "name": "strictToolCalling",
-            "type": "boolean",
-            "description": "Whether the model supports the `strict` argument when passing in tools. If not specified, the `strict` argument will not be passed to OpenAI.",
-            "optional": true,
-            "additionalParams": true,
-            "id": "chatOpenAI_0-input-strictToolCalling-boolean",
-            "display": true
-          },
-          {
-            "label": "Stop Sequence",
-            "name": "stopSequence",
+            "label": "Input Message",
+            "name": "agentUserMessage",
             "type": "string",
+            "description": "Add an input message as user message at the end of the conversation",
             "rows": 4,
-            "optional": true,
-            "description": "List of stop words to use when generating. Use comma to separate multiple stop words.",
-            "additionalParams": true,
-            "id": "chatOpenAI_0-input-stopSequence-string",
-            "display": true
-          },
-          {
-            "label": "BasePath",
-            "name": "basepath",
-            "type": "string",
-            "optional": true,
-            "additionalParams": true,
-            "id": "chatOpenAI_0-input-basepath-string",
-            "display": true
-          },
-          {
-            "label": "Proxy Url",
-            "name": "proxyUrl",
-            "type": "string",
-            "optional": true,
-            "additionalParams": true,
-            "id": "chatOpenAI_0-input-proxyUrl-string",
-            "display": true
-          },
-          {
-            "label": "BaseOptions",
-            "name": "baseOptions",
-            "type": "json",
-            "optional": true,
-            "additionalParams": true,
-            "id": "chatOpenAI_0-input-baseOptions-json",
-            "display": true
-          },
-          {
-            "label": "Allow Image Uploads",
-            "name": "allowImageUploads",
-            "type": "boolean",
-            "description": "Allow image input. Refer to the <a href=\"https://docs.flowiseai.com/using-flowise/uploads#image\" target=\"_blank\">docs</a> for more details.",
-            "default": false,
-            "optional": true,
-            "id": "chatOpenAI_0-input-allowImageUploads-boolean",
-            "display": true
-          },
-          {
-            "label": "Image Resolution",
-            "description": "This parameter controls the resolution in which the model views the image.",
-            "name": "imageResolution",
-            "type": "options",
-            "options": [
-              {
-                "label": "Low",
-                "name": "low"
-              },
-              {
-                "label": "High",
-                "name": "high"
-              },
-              {
-                "label": "Auto",
-                "name": "auto"
-              }
-            ],
-            "default": "low",
-            "optional": false,
-            "show": {
-              "allowImageUploads": true
-            },
-            "id": "chatOpenAI_0-input-imageResolution-options",
-            "display": false
-          },
-          {
-            "label": "Reasoning",
-            "description": "Whether the model supports reasoning. Only applicable for reasoning models.",
-            "name": "reasoning",
-            "type": "boolean",
-            "default": false,
-            "optional": true,
-            "additionalParams": true,
-            "id": "chatOpenAI_0-input-reasoning-boolean",
-            "display": true
-          },
-          {
-            "label": "Reasoning Effort",
-            "description": "Constrains effort on reasoning for reasoning models",
-            "name": "reasoningEffort",
-            "type": "options",
-            "options": [
-              {
-                "label": "Low",
-                "name": "low"
-              },
-              {
-                "label": "Medium",
-                "name": "medium"
-              },
-              {
-                "label": "High",
-                "name": "high"
-              }
-            ],
-            "additionalParams": true,
-            "show": {
-              "reasoning": true
-            },
-            "id": "chatOpenAI_0-input-reasoningEffort-options",
-            "display": false
-          },
-          {
-            "label": "Reasoning Summary",
-            "description": "A summary of the reasoning performed by the model. This can be useful for debugging and understanding the model's reasoning process",
-            "name": "reasoningSummary",
-            "type": "options",
-            "options": [
-              {
-                "label": "Auto",
-                "name": "auto"
-              },
-              {
-                "label": "Concise",
-                "name": "concise"
-              },
-              {
-                "label": "Detailed",
-                "name": "detailed"
-              }
-            ],
-            "additionalParams": true,
-            "show": {
-              "reasoning": true
-            },
-            "id": "chatOpenAI_0-input-reasoningSummary-options",
-            "display": false
-          }
-        ],
-        "inputAnchors": [
-          {
-            "label": "Cache",
-            "name": "cache",
-            "type": "BaseCache",
-            "optional": true,
-            "id": "chatOpenAI_0-input-cache-BaseCache",
-            "display": true
-          }
-        ],
-        "inputs": {
-          "cache": "{{inMemoryCache_0.data.instance}}",
-          "modelName": "gpt-4o-mini",
-          "temperature": 0.9,
-          "streaming": true,
-          "maxTokens": "1200",
-          "topP": "",
-          "frequencyPenalty": "",
-          "presencePenalty": "",
-          "timeout": "",
-          "strictToolCalling": "",
-          "stopSequence": "",
-          "basepath": "",
-          "proxyUrl": "",
-          "baseOptions": "",
-          "allowImageUploads": "",
-          "imageResolution": "low",
-          "reasoning": false,
-          "reasoningEffort": "",
-          "reasoningSummary": ""
-        },
-        "outputAnchors": [
-          {
-            "id": "chatOpenAI_0-output-chatOpenAI-ChatOpenAI|BaseChatOpenAI|BaseChatModel|BaseLanguageModel|Runnable",
-            "name": "chatOpenAI",
-            "label": "ChatOpenAI",
-            "description": "Wrapper around OpenAI large language models that use the Chat endpoint",
-            "type": "ChatOpenAI | BaseChatOpenAI | BaseChatModel | BaseLanguageModel | Runnable"
-          }
-        ],
-        "outputs": {},
-        "selected": false
-      },
-      "width": 300,
-      "height": 675,
-      "selected": false,
-      "positionAbsolute": {
-        "x": 234.12561068257338,
-        "y": 267.33763542229315
-      },
-      "dragging": false
-    },
-    {
-      "id": "worker_0",
-      "position": {
-        "x": 1552.491685157949,
-        "y": 430.9985476164123
-      },
-      "type": "customNode",
-      "data": {
-        "id": "worker_0",
-        "label": "Worker",
-        "version": 2,
-        "name": "worker",
-        "type": "Worker",
-        "hideOutput": true,
-        "baseClasses": [
-          "Worker"
-        ],
-        "category": "Multi Agents",
-        "inputParams": [
-          {
-            "label": "Worker Name",
-            "name": "workerName",
-            "type": "string",
-            "placeholder": "Worker",
-            "id": "worker_0-input-workerName-string",
-            "display": true
-          },
-          {
-            "label": "Worker Prompt",
-            "name": "workerPrompt",
-            "type": "string",
-            "rows": 4,
-            "default": "You are a research assistant who can search for up-to-date info using search engine.",
-            "id": "worker_0-input-workerPrompt-string",
-            "display": true
-          },
-          {
-            "label": "Format Prompt Values",
-            "name": "promptValues",
-            "type": "json",
             "optional": true,
             "acceptVariable": true,
-            "list": true,
-            "id": "worker_0-input-promptValues-json",
-            "display": true
-          },
-          {
-            "label": "Max Iterations",
-            "name": "maxIterations",
-            "type": "number",
-            "optional": true,
-            "id": "worker_0-input-maxIterations-number",
-            "display": true
-          }
-        ],
-        "inputAnchors": [
-          {
-            "label": "Tools",
-            "name": "tools",
-            "type": "Tool",
-            "list": true,
-            "optional": true,
-            "id": "worker_0-input-tools-Tool",
-            "display": true
-          },
-          {
-            "label": "Supervisor",
-            "name": "supervisor",
-            "type": "Supervisor",
-            "id": "worker_0-input-supervisor-Supervisor",
-            "display": true
-          },
-          {
-            "label": "Tool Calling Chat Model",
-            "name": "model",
-            "type": "BaseChatModel",
-            "optional": true,
-            "description": "Only compatible with models that are capable of function calling: ChatOpenAI, ChatMistral, ChatAnthropic, ChatGoogleGenerativeAI, ChatVertexAI, GroqChat. If not specified, supervisor's model will be used",
-            "id": "worker_0-input-model-BaseChatModel",
-            "display": true
-          }
-        ],
-        "inputs": {
-          "workerName": "Trip Planner",
-          "workerPrompt": "You are a Trip Planner agent.\n\nYour job is to convert user travel requests into structured flight search parameters.\nIf required information is missing, ask a clarification question instead of returning JSON.\n\nRequired fields:\n- origin (IATA code)\n- destination (IATA code)\n- date_from or date_range\n\nWhen ready, return VALID JSON ONLY.\nDo not invent values.",
-          "tools": [
-            "{{customMCP_0.data.instance}}"
-          ],
-          "supervisor": "{{supervisor_0.data.instance}}",
-          "model": "",
-          "promptValues": "",
-          "maxIterations": "3"
-        },
-        "outputAnchors": [],
-        "outputs": {},
-        "selected": false
-      },
-      "width": 300,
-      "height": 727,
-      "positionAbsolute": {
-        "x": 1552.491685157949,
-        "y": 430.9985476164123
-      },
-      "selected": false,
-      "dragging": false
-    },
-    {
-      "id": "customMCP_0",
-      "position": {
-        "x": 810.3069928693616,
-        "y": 888.1281608627404
-      },
-      "type": "customNode",
-      "data": {
-        "id": "customMCP_0",
-        "label": "Custom MCP",
-        "version": 1.1,
-        "name": "customMCP",
-        "type": "Custom MCP Tool",
-        "baseClasses": [
-          "Tool"
-        ],
-        "category": "Tools (MCP)",
-        "description": "Custom MCP Config",
-        "inputParams": [
-          {
-            "label": "MCP Server Config",
-            "name": "mcpServerConfig",
-            "type": "code",
-            "hideCodeExecute": true,
-            "hint": {
-              "label": "How to use",
-              "value": "\nYou can use variables in the MCP Server Config with double curly braces `{{ }}` and prefix `$vars.<variableName>`. \n\nFor example, you have a variable called \"var1\":\n```json\n{\n    \"command\": \"docker\",\n    \"args\": [\n        \"run\",\n        \"-i\",\n        \"--rm\",\n        \"-e\", \"API_TOKEN\"\n    ],\n    \"env\": {\n        \"API_TOKEN\": \"{{$vars.var1}}\"\n    }\n}\n```\n\nFor example, when using SSE, you can use the variable \"var1\" in the headers:\n```json\n{\n    \"url\": \"https://api.example.com/endpoint/sse\",\n    \"headers\": {\n        \"Authorization\": \"Bearer {{$vars.var1}}\"\n    }\n}\n```\n"
+            "show": {
+              "agentEnableMemory": true
             },
-            "placeholder": "{\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"/path/to/allowed/files\"]\n}",
-            "id": "customMCP_0-input-mcpServerConfig-code",
+            "id": "agentAgentflow_1-input-agentUserMessage-string",
             "display": true
           },
           {
-            "label": "Available Actions",
-            "name": "mcpActions",
-            "type": "asyncMultiOptions",
-            "loadMethod": "listActions",
-            "refresh": true,
-            "id": "customMCP_0-input-mcpActions-asyncMultiOptions",
+            "label": "Return Response As",
+            "name": "agentReturnResponseAs",
+            "type": "options",
+            "options": [
+              {
+                "label": "User Message",
+                "name": "userMessage"
+              },
+              {
+                "label": "Assistant Message",
+                "name": "assistantMessage"
+              }
+            ],
+            "default": "userMessage",
+            "id": "agentAgentflow_1-input-agentReturnResponseAs-options",
+            "display": true
+          },
+          {
+            "label": "JSON Structured Output",
+            "name": "agentStructuredOutput",
+            "description": "Instruct the Agent to give output in a JSON structured schema",
+            "type": "array",
+            "optional": true,
+            "acceptVariable": true,
+            "array": [
+              {
+                "label": "Key",
+                "name": "key",
+                "type": "string"
+              },
+              {
+                "label": "Type",
+                "name": "type",
+                "type": "options",
+                "options": [
+                  {
+                    "label": "String",
+                    "name": "string"
+                  },
+                  {
+                    "label": "String Array",
+                    "name": "stringArray"
+                  },
+                  {
+                    "label": "Number",
+                    "name": "number"
+                  },
+                  {
+                    "label": "Boolean",
+                    "name": "boolean"
+                  },
+                  {
+                    "label": "Enum",
+                    "name": "enum"
+                  },
+                  {
+                    "label": "JSON Array",
+                    "name": "jsonArray"
+                  }
+                ]
+              },
+              {
+                "label": "Enum Values",
+                "name": "enumValues",
+                "type": "string",
+                "placeholder": "value1, value2, value3",
+                "description": "Enum values. Separated by comma",
+                "optional": true,
+                "show": {
+                  "agentStructuredOutput[$index].type": "enum"
+                }
+              },
+              {
+                "label": "JSON Schema",
+                "name": "jsonSchema",
+                "type": "code",
+                "placeholder": "{\n    \"answer\": {\n        \"type\": \"string\",\n        \"description\": \"Value of the answer\"\n    },\n    \"reason\": {\n        \"type\": \"string\",\n        \"description\": \"Reason for the answer\"\n    },\n    \"optional\": {\n        \"type\": \"boolean\"\n    },\n    \"count\": {\n        \"type\": \"number\"\n    },\n    \"children\": {\n        \"type\": \"array\",\n        \"items\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"value\": {\n                    \"type\": \"string\",\n                    \"description\": \"Value of the children's answer\"\n                }\n            }\n        }\n    }\n}",
+                "description": "JSON schema for the structured output",
+                "optional": true,
+                "hideCodeExecute": true,
+                "show": {
+                  "agentStructuredOutput[$index].type": "jsonArray"
+                }
+              },
+              {
+                "label": "Description",
+                "name": "description",
+                "type": "string",
+                "placeholder": "Description of the key"
+              }
+            ],
+            "id": "agentAgentflow_1-input-agentStructuredOutput-array",
+            "display": true
+          },
+          {
+            "label": "Update Flow State",
+            "name": "agentUpdateState",
+            "description": "Update runtime state during the execution of the workflow",
+            "type": "array",
+            "optional": true,
+            "acceptVariable": true,
+            "array": [
+              {
+                "label": "Key",
+                "name": "key",
+                "type": "asyncOptions",
+                "loadMethod": "listRuntimeStateKeys"
+              },
+              {
+                "label": "Value",
+                "name": "value",
+                "type": "string",
+                "acceptVariable": true,
+                "acceptNodeOutputAsVariable": true
+              }
+            ],
+            "id": "agentAgentflow_1-input-agentUpdateState-array",
             "display": true
           }
         ],
         "inputAnchors": [],
         "inputs": {
-          "mcpServerConfig": "{\n  \"url\": \"https://mcp.kiwi.com\",\n  \"headers\": {}\n}",
-          "mcpActions": "[\"search-flight\"]"
+          "agentModel": "chatOpenAI",
+          "agentMessages": [
+            {
+              "role": "assistant",
+              "content": "<p>You are a Flight Search Agent.</p><p>Use the Kiwi MCP Server tool to search for flights using the provided structured input.</p><p>Rank results based on user preferences.</p><p>Explain trade-offs clearly and concisely.</p><p>Never invent prices, routes, airlines, or links.</p><p>Always include price, stops, total travel time, and a Kiwi deep link.</p><p></p><p>date must be in dd/mm/yyyy</p>"
+            }
+          ],
+          "agentToolsBuiltInOpenAI": "",
+          "agentTools": [
+            {
+              "agentSelectedTool": "customMCP",
+              "agentSelectedToolRequiresHumanInput": "",
+              "agentSelectedToolConfig": {
+                "mcpServerConfig": "{\n  \"url\": \"https://mcp.kiwi.com\",\n  \"headers\": {}\n}",
+                "mcpActions": "[\"search-flight\"]",
+                "agentSelectedTool": "customMCP"
+              }
+            }
+          ],
+          "agentKnowledgeDocumentStores": "",
+          "agentKnowledgeVSEmbeddings": "",
+          "agentEnableMemory": true,
+          "agentMemoryType": "allMessages",
+          "agentUserMessage": "",
+          "agentReturnResponseAs": "userMessage",
+          "agentStructuredOutput": "",
+          "agentUpdateState": "",
+          "agentModelConfig": {
+            "cache": "",
+            "modelName": "gpt-4o-mini",
+            "temperature": 0.9,
+            "streaming": true,
+            "maxTokens": "",
+            "topP": "",
+            "frequencyPenalty": "",
+            "presencePenalty": "",
+            "timeout": "",
+            "strictToolCalling": "",
+            "stopSequence": "",
+            "basepath": "",
+            "proxyUrl": "",
+            "baseOptions": "",
+            "allowImageUploads": "",
+            "imageResolution": "low",
+            "reasoning": "",
+            "reasoningEffort": "",
+            "reasoningSummary": "",
+            "agentModel": "chatOpenAI"
+          },
+          "undefined": ""
         },
         "outputAnchors": [
           {
-            "id": "customMCP_0-output-customMCP-Tool",
-            "name": "customMCP",
-            "label": "Custom MCP Tool",
-            "description": "Custom MCP Config",
-            "type": "Tool"
+            "id": "agentAgentflow_1-output-agentAgentflow",
+            "label": "Agent",
+            "name": "agentAgentflow"
           }
         ],
         "outputs": {},
         "selected": false
       },
-      "width": 300,
-      "height": 576,
+      "type": "agentFlow",
+      "width": 175,
+      "height": 100,
       "selected": false,
       "positionAbsolute": {
-        "x": 810.3069928693616,
-        "y": 888.1281608627404
+        "x": 59.19186785659963,
+        "y": -21.63172020949294
       },
       "dragging": false
     },
     {
-      "id": "worker_1",
+      "id": "humanInputAgentflow_0",
       "position": {
-        "x": 2058.579167053028,
-        "y": 432.6115939303327
+        "x": 361.51559422461145,
+        "y": -12.952570170219872
       },
-      "type": "customNode",
       "data": {
-        "id": "worker_1",
-        "label": "Worker",
-        "version": 2,
-        "name": "worker",
-        "type": "Worker",
-        "hideOutput": true,
-        "baseClasses": [
-          "Worker"
-        ],
-        "category": "Multi Agents",
-        "inputParams": [
-          {
-            "label": "Worker Name",
-            "name": "workerName",
-            "type": "string",
-            "placeholder": "Worker",
-            "id": "worker_1-input-workerName-string",
-            "display": true
-          },
-          {
-            "label": "Worker Prompt",
-            "name": "workerPrompt",
-            "type": "string",
-            "rows": 4,
-            "default": "You are a research assistant who can search for up-to-date info using search engine.",
-            "id": "worker_1-input-workerPrompt-string",
-            "display": true
-          },
-          {
-            "label": "Format Prompt Values",
-            "name": "promptValues",
-            "type": "json",
-            "optional": true,
-            "acceptVariable": true,
-            "list": true,
-            "id": "worker_1-input-promptValues-json",
-            "display": true
-          },
-          {
-            "label": "Max Iterations",
-            "name": "maxIterations",
-            "type": "number",
-            "optional": true,
-            "id": "worker_1-input-maxIterations-number",
-            "display": true
-          }
-        ],
-        "inputAnchors": [
-          {
-            "label": "Tools",
-            "name": "tools",
-            "type": "Tool",
-            "list": true,
-            "optional": true,
-            "id": "worker_1-input-tools-Tool",
-            "display": true
-          },
-          {
-            "label": "Supervisor",
-            "name": "supervisor",
-            "type": "Supervisor",
-            "id": "worker_1-input-supervisor-Supervisor",
-            "display": true
-          },
-          {
-            "label": "Tool Calling Chat Model",
-            "name": "model",
-            "type": "BaseChatModel",
-            "optional": true,
-            "description": "Only compatible with models that are capable of function calling: ChatOpenAI, ChatMistral, ChatAnthropic, ChatGoogleGenerativeAI, ChatVertexAI, GroqChat. If not specified, supervisor's model will be used",
-            "id": "worker_1-input-model-BaseChatModel",
-            "display": true
-          }
-        ],
-        "inputs": {
-          "workerName": "Flight Search Agent",
-          "workerPrompt": "You are a Flight Search Agent.\n\nUse the Kiwi MCP Server tool to search for flights using the provided structured input.\nRank results based on user preferences.\nExplain trade-offs clearly and concisely.\n\nNever invent prices, routes, airlines, or links.\nAlways include price, stops, total travel time, and a Kiwi deep link.",
-          "tools": [
-            "{{customMCP_0.data.instance}}"
-          ],
-          "supervisor": "{{supervisor_0.data.instance}}",
-          "model": "",
-          "promptValues": "",
-          "maxIterations": "3"
-        },
-        "outputAnchors": [],
-        "outputs": {},
-        "selected": false
-      },
-      "width": 300,
-      "height": 727,
-      "selected": false,
-      "positionAbsolute": {
-        "x": 2058.579167053028,
-        "y": 432.6115939303327
-      },
-      "dragging": false
-    },
-    {
-      "id": "inMemoryCache_0",
-      "position": {
-        "x": -329.5939009348611,
-        "y": 257.079935678948
-      },
-      "type": "customNode",
-      "data": {
-        "id": "inMemoryCache_0",
-        "label": "InMemory Cache",
+        "id": "humanInputAgentflow_0",
+        "label": "Human Input 0",
         "version": 1,
-        "name": "inMemoryCache",
-        "type": "InMemoryCache",
+        "name": "humanInputAgentflow",
+        "type": "HumanInput",
+        "color": "#6E6EFD",
         "baseClasses": [
-          "InMemoryCache",
-          "BaseCache"
+          "HumanInput"
         ],
-        "category": "Cache",
-        "description": "Cache LLM response in memory, will be cleared once app restarted",
-        "inputParams": [],
-        "inputAnchors": [],
-        "inputs": {},
-        "outputAnchors": [
+        "category": "Agent Flows",
+        "description": "Request human input, approval or rejection during execution",
+        "inputParams": [
           {
-            "id": "inMemoryCache_0-output-inMemoryCache-InMemoryCache|BaseCache",
-            "name": "inMemoryCache",
-            "label": "InMemoryCache",
-            "description": "Cache LLM response in memory, will be cleared once app restarted",
-            "type": "InMemoryCache | BaseCache"
+            "label": "Description Type",
+            "name": "humanInputDescriptionType",
+            "type": "options",
+            "options": [
+              {
+                "label": "Fixed",
+                "name": "fixed",
+                "description": "Specify a fixed description"
+              },
+              {
+                "label": "Dynamic",
+                "name": "dynamic",
+                "description": "Use LLM to generate a description"
+              }
+            ],
+            "id": "humanInputAgentflow_0-input-humanInputDescriptionType-options",
+            "display": true
+          },
+          {
+            "label": "Description",
+            "name": "humanInputDescription",
+            "type": "string",
+            "placeholder": "Are you sure you want to proceed?",
+            "acceptVariable": true,
+            "rows": 4,
+            "show": {
+              "humanInputDescriptionType": "fixed"
+            },
+            "id": "humanInputAgentflow_0-input-humanInputDescription-string",
+            "display": true
+          },
+          {
+            "label": "Model",
+            "name": "humanInputModel",
+            "type": "asyncOptions",
+            "loadMethod": "listModels",
+            "loadConfig": true,
+            "show": {
+              "humanInputDescriptionType": "dynamic"
+            },
+            "id": "humanInputAgentflow_0-input-humanInputModel-asyncOptions",
+            "display": false
+          },
+          {
+            "label": "Prompt",
+            "name": "humanInputModelPrompt",
+            "type": "string",
+            "default": "<p>Summarize the conversation between the user and the assistant, reiterate the last message from the assistant, and ask if user would like to proceed or if they have any feedback. </p>\n<ul>\n<li>Begin by capturing the key points of the conversation, ensuring that you reflect the main ideas and themes discussed.</li>\n<li>Then, clearly reproduce the last message sent by the assistant to maintain continuity. Make sure the whole message is reproduced.</li>\n<li>Finally, ask the user if they would like to proceed, or provide any feedback on the last assistant message</li>\n</ul>\n<h2 id=\"output-format-the-output-should-be-structured-in-three-parts-\">Output Format The output should be structured in three parts in text:</h2>\n<ul>\n<li>A summary of the conversation (1-3 sentences).</li>\n<li>The last assistant message (exactly as it appeared).</li>\n<li>Ask the user if they would like to proceed, or provide any feedback on last assistant message. No other explanation and elaboration is needed.</li>\n</ul>\n",
+            "acceptVariable": true,
+            "generateInstruction": true,
+            "rows": 4,
+            "show": {
+              "humanInputDescriptionType": "dynamic"
+            },
+            "id": "humanInputAgentflow_0-input-humanInputModelPrompt-string",
+            "display": false
+          },
+          {
+            "label": "Enable Feedback",
+            "name": "humanInputEnableFeedback",
+            "type": "boolean",
+            "default": true,
+            "id": "humanInputAgentflow_0-input-humanInputEnableFeedback-boolean",
+            "display": true
           }
         ],
-        "outputs": {},
+        "inputAnchors": [],
+        "inputs": {
+          "humanInputDescriptionType": "fixed",
+          "humanInputDescription": "<p>Would you like to be told what can be done in the destination?</p>",
+          "humanInputEnableFeedback": false
+        },
+        "outputAnchors": [
+          {
+            "id": "humanInputAgentflow_0-output-0",
+            "label": "Human Input",
+            "name": "humanInputAgentflow"
+          },
+          {
+            "id": "humanInputAgentflow_0-output-1",
+            "label": "Human Input",
+            "name": "humanInputAgentflow"
+          }
+        ],
+        "outputs": {
+          "humanInputAgentflow": ""
+        },
         "selected": false
       },
-      "width": 300,
-      "height": 149,
+      "type": "agentFlow",
+      "width": 167,
+      "height": 80,
       "selected": false,
       "positionAbsolute": {
-        "x": -329.5939009348611,
-        "y": 257.079935678948
+        "x": 361.51559422461145,
+        "y": -12.952570170219872
       },
       "dragging": false
     },
     {
-      "id": "worker_2",
+      "id": "agentAgentflow_0",
       "position": {
-        "x": 2722.639110249576,
-        "y": 465.14196591211487
+        "x": 672.5184706318962,
+        "y": 4.405729908326279
       },
-      "type": "customNode",
       "data": {
-        "id": "worker_2",
-        "label": "Worker",
-        "version": 2,
-        "name": "worker",
-        "type": "Worker",
-        "hideOutput": true,
+        "id": "agentAgentflow_0",
+        "label": "Agent 0",
+        "version": 3.2,
+        "name": "agentAgentflow",
+        "type": "Agent",
+        "color": "#4DD0E1",
         "baseClasses": [
-          "Worker"
+          "Agent"
         ],
-        "category": "Multi Agents",
+        "category": "Agent Flows",
+        "description": "Dynamically choose and utilize tools during runtime, enabling multi-step reasoning",
         "inputParams": [
           {
-            "label": "Worker Name",
-            "name": "workerName",
-            "type": "string",
-            "placeholder": "Worker",
-            "id": "worker_2-input-workerName-string",
+            "label": "Model",
+            "name": "agentModel",
+            "type": "asyncOptions",
+            "loadMethod": "listModels",
+            "loadConfig": true,
+            "id": "agentAgentflow_0-input-agentModel-asyncOptions",
             "display": true
           },
           {
-            "label": "Worker Prompt",
-            "name": "workerPrompt",
-            "type": "string",
-            "rows": 4,
-            "default": "You are a research assistant who can search for up-to-date info using search engine.",
-            "id": "worker_2-input-workerPrompt-string",
-            "display": true
-          },
-          {
-            "label": "Format Prompt Values",
-            "name": "promptValues",
-            "type": "json",
+            "label": "Messages",
+            "name": "agentMessages",
+            "type": "array",
             "optional": true,
             "acceptVariable": true,
-            "list": true,
-            "id": "worker_2-input-promptValues-json",
+            "array": [
+              {
+                "label": "Role",
+                "name": "role",
+                "type": "options",
+                "options": [
+                  {
+                    "label": "System",
+                    "name": "system"
+                  },
+                  {
+                    "label": "Assistant",
+                    "name": "assistant"
+                  },
+                  {
+                    "label": "Developer",
+                    "name": "developer"
+                  },
+                  {
+                    "label": "User",
+                    "name": "user"
+                  }
+                ]
+              },
+              {
+                "label": "Content",
+                "name": "content",
+                "type": "string",
+                "acceptVariable": true,
+                "generateInstruction": true,
+                "rows": 4
+              }
+            ],
+            "id": "agentAgentflow_0-input-agentMessages-array",
             "display": true
           },
           {
-            "label": "Max Iterations",
-            "name": "maxIterations",
-            "type": "number",
+            "label": "OpenAI Built-in Tools",
+            "name": "agentToolsBuiltInOpenAI",
+            "type": "multiOptions",
             "optional": true,
-            "id": "worker_2-input-maxIterations-number",
+            "options": [
+              {
+                "label": "Web Search",
+                "name": "web_search_preview",
+                "description": "Search the web for the latest information"
+              },
+              {
+                "label": "Code Interpreter",
+                "name": "code_interpreter",
+                "description": "Write and run Python code in a sandboxed environment"
+              },
+              {
+                "label": "Image Generation",
+                "name": "image_generation",
+                "description": "Generate images based on a text prompt"
+              }
+            ],
+            "show": {
+              "agentModel": "chatOpenAI"
+            },
+            "id": "agentAgentflow_0-input-agentToolsBuiltInOpenAI-multiOptions",
             "display": true
-          }
-        ],
-        "inputAnchors": [
+          },
+          {
+            "label": "Gemini Built-in Tools",
+            "name": "agentToolsBuiltInGemini",
+            "type": "multiOptions",
+            "optional": true,
+            "options": [
+              {
+                "label": "URL Context",
+                "name": "urlContext",
+                "description": "Extract content from given URLs"
+              },
+              {
+                "label": "Google Search",
+                "name": "googleSearch",
+                "description": "Search real-time web content"
+              },
+              {
+                "label": "Code Execution",
+                "name": "codeExecution",
+                "description": "Write and run Python code in a sandboxed environment"
+              }
+            ],
+            "show": {
+              "agentModel": "chatGoogleGenerativeAI"
+            },
+            "id": "agentAgentflow_0-input-agentToolsBuiltInGemini-multiOptions",
+            "display": false
+          },
+          {
+            "label": "Anthropic Built-in Tools",
+            "name": "agentToolsBuiltInAnthropic",
+            "type": "multiOptions",
+            "optional": true,
+            "options": [
+              {
+                "label": "Web Search",
+                "name": "web_search_20250305",
+                "description": "Search the web for the latest information"
+              },
+              {
+                "label": "Web Fetch",
+                "name": "web_fetch_20250910",
+                "description": "Retrieve full content from specified web pages"
+              }
+            ],
+            "show": {
+              "agentModel": "chatAnthropic"
+            },
+            "id": "agentAgentflow_0-input-agentToolsBuiltInAnthropic-multiOptions",
+            "display": false
+          },
           {
             "label": "Tools",
-            "name": "tools",
-            "type": "Tool",
-            "list": true,
+            "name": "agentTools",
+            "type": "array",
             "optional": true,
-            "id": "worker_2-input-tools-Tool",
-            "display": true
-          },
-          {
-            "label": "Supervisor",
-            "name": "supervisor",
-            "type": "Supervisor",
-            "id": "worker_2-input-supervisor-Supervisor",
-            "display": true
-          },
-          {
-            "label": "Tool Calling Chat Model",
-            "name": "model",
-            "type": "BaseChatModel",
-            "optional": true,
-            "description": "Only compatible with models that are capable of function calling: ChatOpenAI, ChatMistral, ChatAnthropic, ChatGoogleGenerativeAI, ChatVertexAI, GroqChat. If not specified, supervisor's model will be used",
-            "id": "worker_2-input-model-BaseChatModel",
-            "display": true
-          }
-        ],
-        "inputs": {
-          "workerName": "Local Guide",
-          "workerPrompt": "You are a Local Guide and Travel Expert. Your goal is to provide top-tier sightseeing, food, and cultural recommendations for a specific city. When a user asks for recommendations, provide a curated list of 3 must-see attractions and 1 hidden gem. Be enthusiastic and concise.",
-          "tools": [
-            "{{serper_0.data.instance}}"
-          ],
-          "supervisor": "{{supervisor_0.data.instance}}",
-          "model": "",
-          "promptValues": "",
-          "maxIterations": "3"
-        },
-        "outputAnchors": [],
-        "outputs": {},
-        "selected": false
-      },
-      "width": 300,
-      "height": 727,
-      "selected": false,
-      "positionAbsolute": {
-        "x": 2722.639110249576,
-        "y": 465.14196591211487
-      },
-      "dragging": false
-    },
-    {
-      "id": "serper_0",
-      "position": {
-        "x": 2298.5204132359795,
-        "y": 62.58827248852782
-      },
-      "type": "customNode",
-      "data": {
-        "id": "serper_0",
-        "label": "Serper",
-        "version": 1,
-        "name": "serper",
-        "type": "Serper",
-        "baseClasses": [
-          "Serper",
-          "Tool",
-          "StructuredTool",
-          "Runnable"
-        ],
-        "category": "Tools",
-        "description": "Wrapper around Serper.dev - Google Search API",
-        "inputParams": [
-          {
-            "label": "Connect Credential",
-            "name": "credential",
-            "type": "credential",
-            "credentialNames": [
-              "serperApi"
+            "array": [
+              {
+                "label": "Tool",
+                "name": "agentSelectedTool",
+                "type": "asyncOptions",
+                "loadMethod": "listTools",
+                "loadConfig": true
+              },
+              {
+                "label": "Require Human Input",
+                "name": "agentSelectedToolRequiresHumanInput",
+                "type": "boolean",
+                "optional": true
+              }
             ],
-            "id": "serper_0-input-credential-credential",
+            "id": "agentAgentflow_0-input-agentTools-array",
+            "display": true
+          },
+          {
+            "label": "Knowledge (Document Stores)",
+            "name": "agentKnowledgeDocumentStores",
+            "type": "array",
+            "description": "Give your agent context about different document sources. Document stores must be upserted in advance.",
+            "array": [
+              {
+                "label": "Document Store",
+                "name": "documentStore",
+                "type": "asyncOptions",
+                "loadMethod": "listStores"
+              },
+              {
+                "label": "Describe Knowledge",
+                "name": "docStoreDescription",
+                "type": "string",
+                "generateDocStoreDescription": true,
+                "placeholder": "Describe what the knowledge base is about, this is useful for the AI to know when and how to search for correct information",
+                "rows": 4
+              },
+              {
+                "label": "Return Source Documents",
+                "name": "returnSourceDocuments",
+                "type": "boolean",
+                "optional": true
+              }
+            ],
+            "optional": true,
+            "id": "agentAgentflow_0-input-agentKnowledgeDocumentStores-array",
+            "display": true
+          },
+          {
+            "label": "Knowledge (Vector Embeddings)",
+            "name": "agentKnowledgeVSEmbeddings",
+            "type": "array",
+            "description": "Give your agent context about different document sources from existing vector stores and embeddings",
+            "array": [
+              {
+                "label": "Vector Store",
+                "name": "vectorStore",
+                "type": "asyncOptions",
+                "loadMethod": "listVectorStores",
+                "loadConfig": true
+              },
+              {
+                "label": "Embedding Model",
+                "name": "embeddingModel",
+                "type": "asyncOptions",
+                "loadMethod": "listEmbeddings",
+                "loadConfig": true
+              },
+              {
+                "label": "Knowledge Name",
+                "name": "knowledgeName",
+                "type": "string",
+                "placeholder": "A short name for the knowledge base, this is useful for the AI to know when and how to search for correct information"
+              },
+              {
+                "label": "Describe Knowledge",
+                "name": "knowledgeDescription",
+                "type": "string",
+                "placeholder": "Describe what the knowledge base is about, this is useful for the AI to know when and how to search for correct information",
+                "rows": 4
+              },
+              {
+                "label": "Return Source Documents",
+                "name": "returnSourceDocuments",
+                "type": "boolean",
+                "optional": true
+              }
+            ],
+            "optional": true,
+            "id": "agentAgentflow_0-input-agentKnowledgeVSEmbeddings-array",
+            "display": true
+          },
+          {
+            "label": "Enable Memory",
+            "name": "agentEnableMemory",
+            "type": "boolean",
+            "description": "Enable memory for the conversation thread",
+            "default": true,
+            "optional": true,
+            "id": "agentAgentflow_0-input-agentEnableMemory-boolean",
+            "display": true
+          },
+          {
+            "label": "Memory Type",
+            "name": "agentMemoryType",
+            "type": "options",
+            "options": [
+              {
+                "label": "All Messages",
+                "name": "allMessages",
+                "description": "Retrieve all messages from the conversation"
+              },
+              {
+                "label": "Window Size",
+                "name": "windowSize",
+                "description": "Uses a fixed window size to surface the last N messages"
+              },
+              {
+                "label": "Conversation Summary",
+                "name": "conversationSummary",
+                "description": "Summarizes the whole conversation"
+              },
+              {
+                "label": "Conversation Summary Buffer",
+                "name": "conversationSummaryBuffer",
+                "description": "Summarize conversations once token limit is reached. Default to 2000"
+              }
+            ],
+            "optional": true,
+            "default": "allMessages",
+            "show": {
+              "agentEnableMemory": true
+            },
+            "id": "agentAgentflow_0-input-agentMemoryType-options",
+            "display": true
+          },
+          {
+            "label": "Window Size",
+            "name": "agentMemoryWindowSize",
+            "type": "number",
+            "default": "20",
+            "description": "Uses a fixed window size to surface the last N messages",
+            "show": {
+              "agentMemoryType": "windowSize"
+            },
+            "id": "agentAgentflow_0-input-agentMemoryWindowSize-number",
+            "display": false
+          },
+          {
+            "label": "Max Token Limit",
+            "name": "agentMemoryMaxTokenLimit",
+            "type": "number",
+            "default": "2000",
+            "description": "Summarize conversations once token limit is reached. Default to 2000",
+            "show": {
+              "agentMemoryType": "conversationSummaryBuffer"
+            },
+            "id": "agentAgentflow_0-input-agentMemoryMaxTokenLimit-number",
+            "display": false
+          },
+          {
+            "label": "Input Message",
+            "name": "agentUserMessage",
+            "type": "string",
+            "description": "Add an input message as user message at the end of the conversation",
+            "rows": 4,
+            "optional": true,
+            "acceptVariable": true,
+            "show": {
+              "agentEnableMemory": true
+            },
+            "id": "agentAgentflow_0-input-agentUserMessage-string",
+            "display": true
+          },
+          {
+            "label": "Return Response As",
+            "name": "agentReturnResponseAs",
+            "type": "options",
+            "options": [
+              {
+                "label": "User Message",
+                "name": "userMessage"
+              },
+              {
+                "label": "Assistant Message",
+                "name": "assistantMessage"
+              }
+            ],
+            "default": "userMessage",
+            "id": "agentAgentflow_0-input-agentReturnResponseAs-options",
+            "display": true
+          },
+          {
+            "label": "JSON Structured Output",
+            "name": "agentStructuredOutput",
+            "description": "Instruct the Agent to give output in a JSON structured schema",
+            "type": "array",
+            "optional": true,
+            "acceptVariable": true,
+            "array": [
+              {
+                "label": "Key",
+                "name": "key",
+                "type": "string"
+              },
+              {
+                "label": "Type",
+                "name": "type",
+                "type": "options",
+                "options": [
+                  {
+                    "label": "String",
+                    "name": "string"
+                  },
+                  {
+                    "label": "String Array",
+                    "name": "stringArray"
+                  },
+                  {
+                    "label": "Number",
+                    "name": "number"
+                  },
+                  {
+                    "label": "Boolean",
+                    "name": "boolean"
+                  },
+                  {
+                    "label": "Enum",
+                    "name": "enum"
+                  },
+                  {
+                    "label": "JSON Array",
+                    "name": "jsonArray"
+                  }
+                ]
+              },
+              {
+                "label": "Enum Values",
+                "name": "enumValues",
+                "type": "string",
+                "placeholder": "value1, value2, value3",
+                "description": "Enum values. Separated by comma",
+                "optional": true,
+                "show": {
+                  "agentStructuredOutput[$index].type": "enum"
+                }
+              },
+              {
+                "label": "JSON Schema",
+                "name": "jsonSchema",
+                "type": "code",
+                "placeholder": "{\n    \"answer\": {\n        \"type\": \"string\",\n        \"description\": \"Value of the answer\"\n    },\n    \"reason\": {\n        \"type\": \"string\",\n        \"description\": \"Reason for the answer\"\n    },\n    \"optional\": {\n        \"type\": \"boolean\"\n    },\n    \"count\": {\n        \"type\": \"number\"\n    },\n    \"children\": {\n        \"type\": \"array\",\n        \"items\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"value\": {\n                    \"type\": \"string\",\n                    \"description\": \"Value of the children's answer\"\n                }\n            }\n        }\n    }\n}",
+                "description": "JSON schema for the structured output",
+                "optional": true,
+                "hideCodeExecute": true,
+                "show": {
+                  "agentStructuredOutput[$index].type": "jsonArray"
+                }
+              },
+              {
+                "label": "Description",
+                "name": "description",
+                "type": "string",
+                "placeholder": "Description of the key"
+              }
+            ],
+            "id": "agentAgentflow_0-input-agentStructuredOutput-array",
+            "display": true
+          },
+          {
+            "label": "Update Flow State",
+            "name": "agentUpdateState",
+            "description": "Update runtime state during the execution of the workflow",
+            "type": "array",
+            "optional": true,
+            "acceptVariable": true,
+            "array": [
+              {
+                "label": "Key",
+                "name": "key",
+                "type": "asyncOptions",
+                "loadMethod": "listRuntimeStateKeys"
+              },
+              {
+                "label": "Value",
+                "name": "value",
+                "type": "string",
+                "acceptVariable": true,
+                "acceptNodeOutputAsVariable": true
+              }
+            ],
+            "id": "agentAgentflow_0-input-agentUpdateState-array",
             "display": true
           }
         ],
         "inputAnchors": [],
-        "inputs": {},
+        "inputs": {
+          "agentModel": "chatOpenAI",
+          "agentMessages": [
+            {
+              "role": "assistant",
+              "content": "<p>You are a Local Guide and Travel Expert. Your goal is to provide top-tier sightseeing, food, and cultural recommendations for a specific city. When a user asks for recommendations, provide a curated list of 3 must-see attractions and 1 hidden gem. Be enthusiastic and concise.</p>"
+            }
+          ],
+          "agentToolsBuiltInOpenAI": "[\"web_search_preview\"]",
+          "agentTools": "",
+          "agentKnowledgeDocumentStores": "",
+          "agentKnowledgeVSEmbeddings": "",
+          "agentEnableMemory": true,
+          "agentMemoryType": "allMessages",
+          "agentUserMessage": "",
+          "agentReturnResponseAs": "userMessage",
+          "agentStructuredOutput": "",
+          "agentUpdateState": "",
+          "agentModelConfig": {
+            "cache": "",
+            "modelName": "gpt-4o-mini",
+            "temperature": 0.9,
+            "streaming": true,
+            "maxTokens": "",
+            "topP": "",
+            "frequencyPenalty": "",
+            "presencePenalty": "",
+            "timeout": "",
+            "strictToolCalling": "",
+            "stopSequence": "",
+            "basepath": "",
+            "proxyUrl": "",
+            "baseOptions": "",
+            "allowImageUploads": "",
+            "imageResolution": "low",
+            "reasoning": "",
+            "reasoningEffort": "",
+            "reasoningSummary": "",
+            "agentModel": "chatOpenAI"
+          }
+        },
         "outputAnchors": [
           {
-            "id": "serper_0-output-serper-Serper|Tool|StructuredTool|Runnable",
-            "name": "serper",
-            "label": "Serper",
-            "description": "Wrapper around Serper.dev - Google Search API",
-            "type": "Serper | Tool | StructuredTool | Runnable"
+            "id": "agentAgentflow_0-output-agentAgentflow",
+            "label": "Agent",
+            "name": "agentAgentflow"
           }
         ],
         "outputs": {},
         "selected": false
       },
-      "width": 300,
-      "height": 281,
-      "positionAbsolute": {
-        "x": 2298.5204132359795,
-        "y": 62.58827248852782
-      },
+      "type": "agentFlow",
+      "width": 175,
+      "height": 100,
       "selected": false,
+      "positionAbsolute": {
+        "x": 672.5184706318962,
+        "y": 4.405729908326279
+      },
       "dragging": false
     }
   ],
   "edges": [
     {
-      "source": "chatOpenAI_0",
-      "sourceHandle": "chatOpenAI_0-output-chatOpenAI-ChatOpenAI|BaseChatOpenAI|BaseChatModel|BaseLanguageModel|Runnable",
-      "target": "supervisor_0",
-      "targetHandle": "supervisor_0-input-model-BaseChatModel",
-      "type": "buttonedge",
-      "id": "chatOpenAI_0-chatOpenAI_0-output-chatOpenAI-ChatOpenAI|BaseChatOpenAI|BaseChatModel|BaseLanguageModel|Runnable-supervisor_0-supervisor_0-input-model-BaseChatModel"
+      "source": "startAgentflow_0",
+      "sourceHandle": "startAgentflow_0-output-startAgentflow",
+      "target": "agentAgentflow_1",
+      "targetHandle": "agentAgentflow_1",
+      "data": {
+        "sourceColor": "#7EE787",
+        "targetColor": "#4DD0E1",
+        "isHumanInput": false
+      },
+      "type": "agentFlow",
+      "id": "startAgentflow_0-startAgentflow_0-output-startAgentflow-agentAgentflow_1-agentAgentflow_1"
     },
     {
-      "source": "supervisor_0",
-      "sourceHandle": "supervisor_0-output-supervisor-Supervisor",
-      "target": "worker_0",
-      "targetHandle": "worker_0-input-supervisor-Supervisor",
-      "type": "buttonedge",
-      "id": "supervisor_0-supervisor_0-output-supervisor-Supervisor-worker_0-worker_0-input-supervisor-Supervisor"
+      "source": "agentAgentflow_1",
+      "sourceHandle": "agentAgentflow_1-output-agentAgentflow",
+      "target": "humanInputAgentflow_0",
+      "targetHandle": "humanInputAgentflow_0",
+      "data": {
+        "sourceColor": "#4DD0E1",
+        "targetColor": "#6E6EFD",
+        "isHumanInput": false
+      },
+      "type": "agentFlow",
+      "id": "agentAgentflow_1-agentAgentflow_1-output-agentAgentflow-humanInputAgentflow_0-humanInputAgentflow_0"
     },
     {
-      "source": "customMCP_0",
-      "sourceHandle": "customMCP_0-output-customMCP-Tool",
-      "target": "worker_0",
-      "targetHandle": "worker_0-input-tools-Tool",
-      "type": "buttonedge",
-      "id": "customMCP_0-customMCP_0-output-customMCP-Tool-worker_0-worker_0-input-tools-Tool"
-    },
-    {
-      "source": "supervisor_0",
-      "sourceHandle": "supervisor_0-output-supervisor-Supervisor",
-      "target": "worker_1",
-      "targetHandle": "worker_1-input-supervisor-Supervisor",
-      "type": "buttonedge",
-      "id": "supervisor_0-supervisor_0-output-supervisor-Supervisor-worker_1-worker_1-input-supervisor-Supervisor"
-    },
-    {
-      "source": "customMCP_0",
-      "sourceHandle": "customMCP_0-output-customMCP-Tool",
-      "target": "worker_1",
-      "targetHandle": "worker_1-input-tools-Tool",
-      "type": "buttonedge",
-      "id": "customMCP_0-customMCP_0-output-customMCP-Tool-worker_1-worker_1-input-tools-Tool"
-    },
-    {
-      "source": "inMemoryCache_0",
-      "sourceHandle": "inMemoryCache_0-output-inMemoryCache-InMemoryCache|BaseCache",
-      "target": "chatOpenAI_0",
-      "targetHandle": "chatOpenAI_0-input-cache-BaseCache",
-      "type": "buttonedge",
-      "id": "inMemoryCache_0-inMemoryCache_0-output-inMemoryCache-InMemoryCache|BaseCache-chatOpenAI_0-chatOpenAI_0-input-cache-BaseCache"
-    },
-    {
-      "source": "supervisor_0",
-      "sourceHandle": "supervisor_0-output-supervisor-Supervisor",
-      "target": "worker_2",
-      "targetHandle": "worker_2-input-supervisor-Supervisor",
-      "type": "buttonedge",
-      "id": "supervisor_0-supervisor_0-output-supervisor-Supervisor-worker_2-worker_2-input-supervisor-Supervisor"
-    },
-    {
-      "source": "serper_0",
-      "sourceHandle": "serper_0-output-serper-Serper|Tool|StructuredTool|Runnable",
-      "target": "worker_2",
-      "targetHandle": "worker_2-input-tools-Tool",
-      "type": "buttonedge",
-      "id": "serper_0-serper_0-output-serper-Serper|Tool|StructuredTool|Runnable-worker_2-worker_2-input-tools-Tool"
+      "source": "humanInputAgentflow_0",
+      "sourceHandle": "humanInputAgentflow_0-output-0",
+      "target": "agentAgentflow_0",
+      "targetHandle": "agentAgentflow_0",
+      "data": {
+        "sourceColor": "#6E6EFD",
+        "targetColor": "#4DD0E1",
+        "edgeLabel": "proceed",
+        "isHumanInput": true
+      },
+      "type": "agentFlow",
+      "id": "humanInputAgentflow_0-humanInputAgentflow_0-output-0-agentAgentflow_0-agentAgentflow_0"
     }
   ]
 }
