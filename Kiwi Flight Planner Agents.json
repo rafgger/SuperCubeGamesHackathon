@@ -394,7 +394,7 @@
           "modelName": "gpt-4o-mini",
           "temperature": 0.9,
           "streaming": true,
-          "maxTokens": "",
+          "maxTokens": "1200",
           "topP": "",
           "frequencyPenalty": "",
           "presencePenalty": "",
@@ -434,8 +434,8 @@
     {
       "id": "worker_0",
       "position": {
-        "x": 1289.9869311467953,
-        "y": 487.957320197292
+        "x": 1325.4732646038237,
+        "y": 426.6627442260616
       },
       "type": "customNode",
       "data": {
@@ -514,9 +514,11 @@
           }
         ],
         "inputs": {
-          "workerName": "Planning agent",
-          "workerPrompt": "You are a research assistant who can search for up-to-date info using search engine.",
-          "tools": "",
+          "workerName": "Trip planner",
+          "workerPrompt": "You are a Trip Planner agent.\n\nYour job is to convert user travel requests into structured flight search parameters.\nIf required information is missing, ask a clarification question instead of returning JSON.\n\nRequired fields:\n- origin (IATA code)\n- destination (IATA code)\n- date_from or date_range\n\nWhen ready, return VALID JSON ONLY.\nDo not invent values.",
+          "tools": [
+            "{{customMCP_0.data.instance}}"
+          ],
           "supervisor": "{{supervisor_0.data.instance}}",
           "model": "",
           "promptValues": "",
@@ -529,10 +531,183 @@
       "width": 300,
       "height": 728,
       "positionAbsolute": {
-        "x": 1289.9869311467953,
-        "y": 487.957320197292
+        "x": 1325.4732646038237,
+        "y": 426.6627442260616
       },
       "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "worker_1",
+      "position": {
+        "x": 1840.957425823257,
+        "y": 486.87900516851795
+      },
+      "type": "customNode",
+      "data": {
+        "id": "worker_1",
+        "label": "Worker",
+        "version": 2,
+        "name": "worker",
+        "type": "Worker",
+        "hideOutput": true,
+        "baseClasses": [
+          "Worker"
+        ],
+        "category": "Multi Agents",
+        "inputParams": [
+          {
+            "label": "Worker Name",
+            "name": "workerName",
+            "type": "string",
+            "placeholder": "Worker",
+            "id": "worker_1-input-workerName-string",
+            "display": true
+          },
+          {
+            "label": "Worker Prompt",
+            "name": "workerPrompt",
+            "type": "string",
+            "rows": 4,
+            "default": "You are a research assistant who can search for up-to-date info using search engine.",
+            "id": "worker_1-input-workerPrompt-string",
+            "display": true
+          },
+          {
+            "label": "Format Prompt Values",
+            "name": "promptValues",
+            "type": "json",
+            "optional": true,
+            "acceptVariable": true,
+            "list": true,
+            "id": "worker_1-input-promptValues-json",
+            "display": true
+          },
+          {
+            "label": "Max Iterations",
+            "name": "maxIterations",
+            "type": "number",
+            "optional": true,
+            "id": "worker_1-input-maxIterations-number",
+            "display": true
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Tools",
+            "name": "tools",
+            "type": "Tool",
+            "list": true,
+            "optional": true,
+            "id": "worker_1-input-tools-Tool",
+            "display": true
+          },
+          {
+            "label": "Supervisor",
+            "name": "supervisor",
+            "type": "Supervisor",
+            "id": "worker_1-input-supervisor-Supervisor",
+            "display": true
+          },
+          {
+            "label": "Tool Calling Chat Model",
+            "name": "model",
+            "type": "BaseChatModel",
+            "optional": true,
+            "description": "Only compatible with models that are capable of function calling: ChatOpenAI, ChatMistral, ChatAnthropic, ChatGoogleGenerativeAI, ChatVertexAI, GroqChat. If not specified, supervisor's model will be used",
+            "id": "worker_1-input-model-BaseChatModel",
+            "display": true
+          }
+        ],
+        "inputs": {
+          "workerName": "",
+          "workerPrompt": "You are a research assistant who can search for up-to-date info using search engine.",
+          "tools": [
+            "{{customMCP_0.data.instance}}"
+          ],
+          "supervisor": "",
+          "model": "",
+          "promptValues": "",
+          "maxIterations": ""
+        },
+        "outputAnchors": [],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 728,
+      "positionAbsolute": {
+        "x": 1840.957425823257,
+        "y": 486.87900516851795
+      },
+      "selected": false
+    },
+    {
+      "id": "customMCP_0",
+      "position": {
+        "x": 645.5684367383681,
+        "y": 969.2302192656916
+      },
+      "type": "customNode",
+      "data": {
+        "id": "customMCP_0",
+        "label": "Custom MCP",
+        "version": 1.1,
+        "name": "customMCP",
+        "type": "Custom MCP Tool",
+        "baseClasses": [
+          "Tool"
+        ],
+        "category": "Tools (MCP)",
+        "description": "Custom MCP Config",
+        "inputParams": [
+          {
+            "label": "MCP Server Config",
+            "name": "mcpServerConfig",
+            "type": "code",
+            "hideCodeExecute": true,
+            "hint": {
+              "label": "How to use",
+              "value": "\nYou can use variables in the MCP Server Config with double curly braces `{{ }}` and prefix `$vars.<variableName>`. \n\nFor example, you have a variable called \"var1\":\n```json\n{\n    \"command\": \"docker\",\n    \"args\": [\n        \"run\",\n        \"-i\",\n        \"--rm\",\n        \"-e\", \"API_TOKEN\"\n    ],\n    \"env\": {\n        \"API_TOKEN\": \"{{$vars.var1}}\"\n    }\n}\n```\n\nFor example, when using SSE, you can use the variable \"var1\" in the headers:\n```json\n{\n    \"url\": \"https://api.example.com/endpoint/sse\",\n    \"headers\": {\n        \"Authorization\": \"Bearer {{$vars.var1}}\"\n    }\n}\n```\n"
+            },
+            "placeholder": "{\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"/path/to/allowed/files\"]\n}",
+            "id": "customMCP_0-input-mcpServerConfig-code",
+            "display": true
+          },
+          {
+            "label": "Available Actions",
+            "name": "mcpActions",
+            "type": "asyncMultiOptions",
+            "loadMethod": "listActions",
+            "refresh": true,
+            "id": "customMCP_0-input-mcpActions-asyncMultiOptions",
+            "display": true
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "mcpServerConfig": "{\n  \"mcpServers\": {\n    \"kiwi-com-flight-search\": {\n      \"url\": \"https://mcp.kiwi.com\"\n    }\n  }\n}",
+          "mcpActions": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "customMCP_0-output-customMCP-Tool",
+            "name": "customMCP",
+            "label": "Custom MCP Tool",
+            "description": "Custom MCP Config",
+            "type": "Tool"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 549,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 645.5684367383681,
+        "y": 969.2302192656916
+      },
       "dragging": false
     }
   ],
@@ -552,6 +727,22 @@
       "targetHandle": "worker_0-input-supervisor-Supervisor",
       "type": "buttonedge",
       "id": "supervisor_0-supervisor_0-output-supervisor-Supervisor-worker_0-worker_0-input-supervisor-Supervisor"
+    },
+    {
+      "source": "customMCP_0",
+      "sourceHandle": "customMCP_0-output-customMCP-Tool",
+      "target": "worker_0",
+      "targetHandle": "worker_0-input-tools-Tool",
+      "type": "buttonedge",
+      "id": "customMCP_0-customMCP_0-output-customMCP-Tool-worker_0-worker_0-input-tools-Tool"
+    },
+    {
+      "source": "customMCP_0",
+      "sourceHandle": "customMCP_0-output-customMCP-Tool",
+      "target": "worker_1",
+      "targetHandle": "worker_1-input-tools-Tool",
+      "type": "buttonedge",
+      "id": "customMCP_0-customMCP_0-output-customMCP-Tool-worker_1-worker_1-input-tools-Tool"
     }
   ]
 }
