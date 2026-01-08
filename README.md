@@ -14,6 +14,10 @@ A conversational flight planning application built with Flowise AI that uses the
 
 This project implements a multi-agent system that translates natural language travel requests into structured flight searches, providing users with intelligent flight recommendations and explanations.
 
+## Try It Out
+
+🤖 **[Try the Live Chatbot](https://cloud.flowiseai.com/chatbot/b88125ca-320b-4041-ab37-351a19545f29)** - Experience the flight planning assistant in action!
+
 ## Architecture
 
 The system uses a **supervisor-worker pattern** with specialized agents:
